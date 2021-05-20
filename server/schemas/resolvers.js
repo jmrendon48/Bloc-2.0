@@ -21,7 +21,7 @@ const resolvers = {
             return Review.find(params).sort({ createdAt: -1 });
         },
         // place this inside of the `Query` nested object right after `reviews` 
-        reviews: async (parent, { _id }) => {
+        review: async (parent, { _id }) => {
             return Review.findOne({ _id });
         },
         // get all users
