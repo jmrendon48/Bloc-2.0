@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Home = () => {
+    // const reviews = data?.reviews || [];
+    
     return (
         <div>
             <div class="jumbotron jumbotron-fluid">
