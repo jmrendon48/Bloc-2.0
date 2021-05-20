@@ -14,26 +14,24 @@ const typeDefs = gql`
 
   type Review {
     _id: ID    
-    authors: String 
-    description: String
-    gameId: String    
-    image: String
-    link: String
     title: String
+    reviewBody: String
+    createdAt: String
+    username: String
   }
 
   type Query {
     me: User
     users: [User]
     user(username: String!): User
-    reviews(username: String): [Review]
-
-  }
+    reviews: [Review]
+    review(_id: ID!): Review
+  } 
 
   type Mutation {
-    login(email: String!, password: String!): User
-    addUser(username: String!, email: String!, password: String!): User
-    addReview(reviewText: String!): Review
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    addReview(title: String!, reviewBody: String!): Review
     addFollow(followId: ID!): User
   }
   
