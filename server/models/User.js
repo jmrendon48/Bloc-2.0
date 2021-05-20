@@ -57,7 +57,7 @@ userSchema.virtual('reviewCount').get(function () {
 });
 
 userSchema.virtual('followCount').get(function () {
-    return this.friends.length;
+    return this.follows.length;
 });
 
 const User = model('User', userSchema);
