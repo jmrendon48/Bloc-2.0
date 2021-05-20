@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from '../SignUp/index';
@@ -17,13 +18,21 @@ const AppNavbar = () => {
           
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
+          <Nav.Link as={Link} to='/Home'>
+            <FontAwesomeIcon
+              icon='cube'
+              size='2x'
+            />
+          </Nav.Link>
+          <Nav.Link as={Link} to='/Profile'>
+                    My Bloc Dashboard
+          </Nav.Link>
             <Nav className='ml-auto'>
-            
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved'>
-                    See Your Books
+                  <Nav.Link as={Link} to='/Profile'>
+                    My Bloc Dashboard
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
