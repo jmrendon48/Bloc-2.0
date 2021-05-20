@@ -26,12 +26,14 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
+    reviews(username: String): [Review]
+
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    addReview(thoughtText: String!): Thought
+    login(email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): User
+    addReview(reviewText: String!): Review
     addFollow(followId: ID!): User
   }
   
