@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
-import SignUpForm from './SignupForm';
-import LoginForm from './LoginForm';
+import SignUpForm from '../SignUp/index';
+import LoginForm from '../Login/index';
 
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
   // set modal display state
@@ -14,15 +14,11 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Google Books Search
-          </Navbar.Brand>
+          
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
-              <Nav.Link as={Link} to='/'>
-                Search For Books
-              </Nav.Link>
+            
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
