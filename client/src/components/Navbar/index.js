@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from '../SignUp/index';
 import LoginForm from '../Login/index';
+import ReviewForm from '../ReviewForm/index';
 
 import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
   // set modal display state
-  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   return (
     <>
@@ -18,7 +20,7 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
-            
+              <Nav.Link onClick={() => setShowReviewModal(true)}>Add Review</Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
@@ -28,17 +30,17 @@ const AppNavbar = () => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link onClick={() => setShowLoginModal(true)}>Login/Sign Up</Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* set modal data up */}
+      {/* Login / Sign Up Modal */}
       <Modal
         size='lg'
-        show={showModal}
-        onHide={() => setShowModal(false)}
+        show={showLoginModal}
+        onHide={() => setShowLoginModal(false)}
         aria-labelledby='signup-modal'>
         {/* tab container to do either signup or login component */}
         <Tab.Container defaultActiveKey='login'>
@@ -57,15 +59,33 @@ const AppNavbar = () => {
           <Modal.Body>
             <Tab.Content>
               <Tab.Pane eventKey='login'>
-                <LoginForm handleModalClose={() => setShowModal(false)} />
+                <LoginForm handleModalClose={() => setShowLoginModal(false)} />
               </Tab.Pane>
               <Tab.Pane eventKey='signup'>
-                <SignUpForm handleModalClose={() => setShowModal(false)} />
+                <SignUpForm handleModalClose={() => setShowLoginModal(false)} />
               </Tab.Pane>
             </Tab.Content>
           </Modal.Body>
         </Tab.Container>
       </Modal>
+      {/* Add Review Modal */}
+      <Modal
+        size='lg'
+        show={showReviewModal}
+        onHide={() => setShowReviewModal(false)}
+        aria-labelledby='signup-modal'>
+        {/* tab container to do either signup or login component */}
+        <Tab.Container defaultActiveKey='login'>
+          <Modal.Header closeButton>
+            <Modal.Title id='signup-modal'>
+              Add Review
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
+          </Modal.Body>
+        </Tab.Container>
+      </Modal>    
     </>
   );
 };
