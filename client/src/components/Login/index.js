@@ -1,57 +1,92 @@
-const { User } = require('../models')
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+// see SignupForm.js for comments
+import React, { useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 
-const resolvers = {
-    Query: {
-        me: async (parent, args, context) => {
-            if (context.user) {
-                const userData = await User.findOne({ _id: context.user._id })
-                    .select('-__v -password')
-                    .populate('savedGames')
+import { loginUser } from '../../utils/API';
+import Auth from '../../utils/auth';
 
-                return userData;
-            }
+const LoginForm = () => {
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [validated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-            throw new AuthenticationError('Not logged in');
-        },
-        // get all users
-        users: async () => {
-            return User.find()
-                .select('-__v -password')
-                .populate('savedGames')
-        },
-        // get a user by username
-        user: async (parent, { username }) => {
-            return User.findOne({ username })
-                .select('-__v -password')
-                .populate('savedGames');
-        },
-    },
-    Mutation: {
-        addUser: async (parent, args) => {
-            const user = await User.create(args);
-            const token = signToken(user);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
 
-            return { token, user };
-        },
-        login: async (parent, { email, password }) => {
-            const user = await User.findOne({ email });
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-            if (!user) {
-                throw new AuthenticationError('Incorrect credentials');
-            }
-
-            const correctPw = await user.isCorrectPassword(password);
-
-            if (!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
-            }
-
-            const token = signToken(user);
-            return { token, user };
-        },
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
     }
-}
 
-module.exports = resolvers;
+    try {
+      const response = await loginUser(userFormData);
+
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+
+      const { token, user } = await response.json();
+      console.log(user);
+      Auth.login(token);
+    } catch (err) {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
+    });
+  };
+
+  return (
+    <>
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+          Something went wrong with your login credentials!
+        </Alert>
+        <Form.Group>
+          <Form.Label htmlFor='email'>Email</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Your email'
+            name='email'
+            onChange={handleInputChange}
+            value={userFormData.email}
+            required
+          />
+          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label htmlFor='password'>Password</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='Your password'
+            name='password'
+            onChange={handleInputChange}
+            value={userFormData.password}
+            required
+          />
+          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Button
+          disabled={!(userFormData.email && userFormData.password)}
+          type='submit'
+          variant='success'>
+          Submit
+        </Button>
+      </Form>
+    </>
+  );
+};
+
+export default LoginForm;
