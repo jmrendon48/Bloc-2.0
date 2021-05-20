@@ -3,7 +3,13 @@ const dateFormat = require('../utils/dateFormat');
 
 const reviewSchema = new Schema(
   {
-    reviewText: {
+    title: {
+      type: String,
+      required: 'You need a title',
+      minlength: 1,
+      maxlength: 30
+    },
+    reviewBody: {
       type: String,
       required: 'You need to leave a review!',
       minlength: 1,
