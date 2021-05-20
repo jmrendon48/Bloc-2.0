@@ -13,7 +13,7 @@ function App() {
       <Router>
       <>
         <Navbar />
-        <Home></Home>
+      <Home/>
       </>
     </Router>
     </div>
