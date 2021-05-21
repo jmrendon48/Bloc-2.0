@@ -1,47 +1,43 @@
 import React from 'react';
-
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-
 import ReviewList from '../components/ReviewList';
 import FollowingList from '../components/FollowingList';
-
 import Auth from '../utils/auth';
 import { FOLLOW_USER } from '../utils/mutations';
-import { QUERY_USER, QUERY_ME, QUERY_REVIEWS } from '../utils/queries';
-
-
+import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
 const Profile = () => {
 
   const [followUser] = useMutation(FOLLOW_USER);
 
   const { username: userParam } = useParams();
-
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, QUERY_REVIEWS, {
+  
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam }
   });
 
-  const reviews = data?.reviews || [];
-
   const user = data?.me || data?.user || {};
-
   // redirect to personal profile page if username is the logged-in user's
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/profile/" />;
   }
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-//   if (!user?.username) {
-//     return (
-//       <h4>
-//         You need to be logged in to see this page. Use the navigation links above to sign up or log in!
-//       </h4>
-//     );
-//   }
+  if (!user?.username) {
+    return (
+      <h4>
+        You need to be logged in to see this page. Use the navigation links above to sign up or log in!
+        <div>
+          Viewing {`${user.username}'s`} Bloc profile.
+        </div>
+      </h4>
+    );
+  }
+  console.log("Profile.js ==========",user.username, loading, data)
 
   const handleClick = async () => {
     try {
@@ -69,7 +65,7 @@ const Profile = () => {
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
-          <ReviewList reviews={reviews}/>
+          <ReviewList reviews={user.reviews}/>
         </div>
 
         <div className="col-12 col-lg-3 mb-3">
