@@ -26,8 +26,12 @@ const AppNavbar = () => {
               size='2x'
             />
           </Nav.Link>
+          
             <Nav className='ml-auto'>
-              
+              {/* <div className="rightSide">
+              <input type="text" placeholder="Enter Game Title"></input>
+              <button>Search</button>
+              </div> */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/Profile'>My Bloc Dashboard</Nav.Link>

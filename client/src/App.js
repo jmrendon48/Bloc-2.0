@@ -9,6 +9,7 @@ import './components/FontAwesome';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import gamePage from './pages/GamePage';
 
 function App() {
   const client = new ApolloClient({
@@ -23,7 +24,12 @@ function App() {
           <>
             <Navbar />
             <Switch>
+<<<<<<< HEAD
               <Route exact path='/' component={Home}></Route>
+=======
+              <Route exact path='/Home' component={Home}></Route>
+              <Route exact path='/Search' component={gamePage}></Route>
+>>>>>>> feature/gamePage
               <Route exact path='/Profile' component={Profile}></Route>
             </Switch>
           </>
