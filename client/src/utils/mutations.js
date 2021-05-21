@@ -25,16 +25,13 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_REVIEW = gql`
-  mutation addReview($title: String!,) {
-    addReview(thoughtText: $thoughtText) {
+  mutation addReview($title: String!, $reviewBody: String!) {
+    addReview(title: $title, reviewBody: $reviewBody) {
       _id
-      thoughtText
+      title
+      reviewBody
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-      }
     }
   }
 `;
