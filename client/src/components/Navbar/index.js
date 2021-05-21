@@ -20,7 +20,7 @@ const AppNavbar = () => {
           
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-          <Nav.Link as={Link} to='/Home'>
+          <Nav.Link as={Link} to='/'>
             <FontAwesomeIcon
               icon='cube'
               size='2x'
@@ -78,16 +78,18 @@ const AppNavbar = () => {
         size='lg'
         show={showReviewModal}
         onHide={() => setShowReviewModal(false)}
-        aria-labelledby='review-modal'>
+        aria-labelledby='signup-modal'>
         {/* tab container to do either signup or login component */}
-        <Modal.Header closeButton>
-          <Modal.Title id='review-modal'>
-            Add Review
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
-        </Modal.Body>
+        <Tab.Container defaultActiveKey='login'>
+          <Modal.Header closeButton>
+            <Modal.Title id='signup-modal'>
+              Add Review
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
+          </Modal.Body>
+        </Tab.Container>
       </Modal>    
     </>
   );
