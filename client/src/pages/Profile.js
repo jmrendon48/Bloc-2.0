@@ -8,7 +8,7 @@ import FollowingList from '../components/FollowingList';
 
 import Auth from '../utils/auth';
 import { FOLLOW_USER } from '../utils/mutations';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_REVIEWS } from '../utils/queries';
 
 
 
@@ -18,9 +18,11 @@ const Profile = () => {
 
   const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, QUERY_REVIEWS, {
     variables: { username: userParam }
   });
+
+  const reviews = data?.reviews || [];
 
   const user = data?.me || data?.user || {};
 
@@ -67,7 +69,7 @@ const Profile = () => {
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
-          <ReviewList reviews={user.reviews} title={`${user.username}'s Blocs...`} />
+          <ReviewList reviews={reviews}/>
         </div>
 
         <div className="col-12 col-lg-3 mb-3">
