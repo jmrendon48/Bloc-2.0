@@ -82,18 +82,16 @@ const AppNavbar = () => {
         size='lg'
         show={showReviewModal}
         onHide={() => setShowReviewModal(false)}
-        aria-labelledby='signup-modal'>
+        aria-labelledby='review-modal'>
         {/* tab container to do either signup or login component */}
-        <Tab.Container defaultActiveKey='login'>
-          <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              Add Review
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
-          </Modal.Body>
-        </Tab.Container>
+        <Modal.Header closeButton>
+          <Modal.Title id='review-modal'>
+            Add Review
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
+        </Modal.Body>
       </Modal>    
     </>
   );
