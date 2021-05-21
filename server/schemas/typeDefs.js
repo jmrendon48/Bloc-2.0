@@ -33,6 +33,9 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addReview(title: String!, reviewBody: String!): Review
     addFollow(followId: ID!): User
+    removeFollow(followId: ID!): User
+    editReview(_id: ID!, title: String!, reviewBody: String!): Review
+    deleteReview(_id: ID!): Review
   }
   
   type Auth {
