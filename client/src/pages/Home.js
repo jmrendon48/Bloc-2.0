@@ -4,8 +4,10 @@ import { QUERY_REVIEWS } from '../utils/queries';
 import ReviewList from '../components/ReviewList';
 
 const Home = () => {
+    
     // use useQuery hook to make query request
     const { loading, data } = useQuery(QUERY_REVIEWS);
+
     const reviews = data?.reviews || [];
     console.log(reviews);
     
