@@ -20,7 +20,7 @@ const AppNavbar = () => {
           
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-          <Nav.Link as={Link} to='/Home'>
+          <Nav.Link as={Link} to='/'>
             <FontAwesomeIcon
               icon='cube'
               size='2x'
