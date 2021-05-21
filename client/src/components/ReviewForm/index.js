@@ -1,32 +1,32 @@
 import React, { useState } from "react";
 
 const ReviewForm = () => {
-  const [titleText, setTitleText] = useState("");
+  const [title, setTitle] = useState("");
   const [titleCharacterCount, setTitleCharacterCount] = useState(0);
 
-  const [bodyText, setBodyText] = useState("");
-  const [bodyCharacterCount, setBodyCharacterCount] = useState(0);
+  const [reviewBody, setReviewBody] = useState("");
+  const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
 
-  const handleBodyChange = (event) => {
+  const handlereviewBodyChange = (event) => {
     if (event.target.value.length <= 280) {
-      setBodyText(event.target.value);
-      setBodyCharacterCount(event.target.value.length);
+      setReviewBody(event.target.value);
+      SetReviewBodyCharacterCount(event.target.value.length);
     }
   };
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
-      setTitleText(event.target.value);
+      setTitle(event.target.value);
       setTitleCharacterCount(event.target.value.length);
     }
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    setTitleText("");
+    setTitle("");
     setTitleCharacterCount(0);
-    setBodyText("");
-    setBodyCharacterCount(0);
+    setReviewBody("");
+    SetReviewBodyCharacterCount(0);
   };
 
   return (
@@ -37,7 +37,7 @@ const ReviewForm = () => {
       >
         <textarea
           placeholder="Whats the title of your review?"
-          value={titleText}
+          value={title}
           className="form-input col-12 col-md-9"
           onChange={handleTitleChange}
         ></textarea>
@@ -46,12 +46,12 @@ const ReviewForm = () => {
         </p>
         <textarea
           placeholder="Here's a new review..."
-          value={bodyText}
+          value={reviewBody}
           className="form-input col-12 col-md-9"
-          onChange={handleBodyChange}
+          onChange={handlereviewBodyChange}
         ></textarea>
-        <p className={`m-0 ${bodyCharacterCount === 280 ? "text-error" : ""}`}>
-          Character Count: {bodyCharacterCount}/280
+        <p className={`m-0 ${reviewBodyCharacterCount === 280 ? "text-error" : ""}`}>
+          Character Count: {reviewBodyCharacterCount}/280
         </p>
         <button className="btn col-12 col-md-3" type="submit">
           Submit
