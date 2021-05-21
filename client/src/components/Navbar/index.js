@@ -26,16 +26,12 @@ const AppNavbar = () => {
               size='2x'
             />
           </Nav.Link>
-          <Nav.Link as={Link} to='/Profile'>
-                    My Bloc Dashboard
-          </Nav.Link>
             <Nav className='ml-auto'>
-              <Nav.Link onClick={() => setShowReviewModal(true)}>Add Review</Nav.Link>
+              
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/Profile'>
-                    My Bloc Dashboard
-                  </Nav.Link>
+                  <Nav.Link as={Link} to='/Profile'>My Bloc Dashboard</Nav.Link>
+                  <Nav.Link onClick={() => setShowReviewModal(true)}>Add Review</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
