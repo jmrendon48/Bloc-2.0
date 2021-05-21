@@ -90,7 +90,40 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You need to be logged in!');
-        }
+        },
+        removeFollow: async (parent, { followId }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { follows: followId } },
+                    { new: true }
+                ).populate('follows');
+
+                return updatedUser;
+            }
+
+            throw new AuthenticationError('You need to be logged in!');
+        },
+        editReview: async (parent, { _id, title, reviewBody}, context) => {
+            if (context.user) {
+                const review = await Review.findByIdAndUpdate(
+                    {_id: _id},
+                    { $set: { title: title, reviewBody: reviewBody } },
+                    { new: true }
+                );
+                return review;
+            }
+            throw new AuthenticationError('You need to be logged in!');
+        },
+        deleteReview: async (parent, { _id }, context) => {
+            if (context.user) {
+                const review = await Review.findOneAndDelete(
+                    {_id: _id}
+                );
+                return review;
+            }
+            throw new AuthenticationError('You need to be logged in!');
+        },
     }
 }
 
