@@ -23,3 +23,29 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_REVIEW = gql`
+  mutation addReview($title: String!, $reviewBody: String!) {
+    addReview(title: $title, reviewBody: $reviewBody) {
+      _id
+      title
+      reviewBody
+      createdAt
+      username
+    }
+  }
+`;
+
+export const FOLLOW_USER = gql`
+  mutation followUser($id: ID!) {
+    followUser(friendId: $id) {
+      _id
+      username
+      friendCount
+      friends {
+        _id
+        username
+      }
+    }
+  }
+`;

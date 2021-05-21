@@ -24,7 +24,7 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
-    reviews: [Review]
+    reviews(username: String): [Review]
     review(_id: ID!): Review
   } 
 
