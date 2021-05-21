@@ -1,9 +1,11 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-import './components/FontAwesome';
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import './App.css';
+import './components/FontAwesome';
+
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';

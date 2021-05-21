@@ -3,8 +3,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_REVIEWS } from '../utils/queries';
 
 const Home = () => {
+    
     // use useQuery hook to make query request
     const { loading, data } = useQuery(QUERY_REVIEWS);
+
     const reviews = data?.reviews || [];
     console.log(reviews);
     
