@@ -46,8 +46,6 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 import { searchGame } from "../utils/API"
 
-
-
 const SearchBooks = () => {
   // create state for holding returned google api data
   const [ games, setGames] = useState([]);
@@ -71,16 +69,13 @@ const SearchBooks = () => {
     
     try {
       const response = await searchGame(searchInput);
-        console.log(response)
+        console.log("1~~~~~~~~~~~~~~~~~~~~~~~~",response)
     //   if (!response.ok) {
     //     throw new Error('something went wrong!');
     //   }
-        
+      const convertJSON = response.json()
+      console.log("2~~~~~~~~~~~~~~~~~~~~",convertJSON)
       const { items } = await response.json();
-      console.log(items)
-
-      console.log(response);
-
       setSearchInput('');
     } catch (err) {
       console.error(err);
