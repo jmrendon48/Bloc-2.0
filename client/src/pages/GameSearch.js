@@ -68,15 +68,16 @@ const SearchBooks = () => {
     if (!searchInput) {
       return false;
     }
-
+    
     try {
       const response = await searchGame(searchInput);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
+        console.log(response)
+    //   if (!response.ok) {
+    //     throw new Error('something went wrong!');
+    //   }
+        
       const { items } = await response.json();
+      console.log(items)
 
       console.log(response);
 
