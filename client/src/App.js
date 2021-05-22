@@ -8,7 +8,7 @@ import './components/FontAwesome';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import gamePage from './pages/GamePage';
+import gameSearch from './pages/GameSearch';
 
 const client = new ApolloClient({
   request: operation => {
@@ -32,7 +32,7 @@ function App() {
             <Navbar/>
             <Switch>
               <Route exact path='/' component={Home}></Route>
-              <Route exact path='/search' component={gamePage}></Route>
+              <Route exact path='/search' component={gameSearch}></Route>
               <Route exact path='/profile/:username?' component={Profile}></Route>
             </Switch>
           </>
