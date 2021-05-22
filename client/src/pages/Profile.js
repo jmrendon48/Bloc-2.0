@@ -76,8 +76,8 @@ const Profile = () => {
         <div className="col-12 col-lg-3 mb-3">
           <FollowingList
             username={user.username}
-            followerCount={user.followerCount}
-            follower={user.follower}
+            followCount={user.followCount}
+            followers={user.followers}
           />
         </div>
       </div>
