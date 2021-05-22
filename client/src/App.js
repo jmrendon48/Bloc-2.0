@@ -30,11 +30,11 @@ function App() {
       <ApolloProvider client={client}>
         <Router>
           <>
-            <Navbar />
+            <Navbar/>
             <Switch>
               <Route exact path='/' component={Home}></Route>
               <Route exact path='/Search' component={gamePage}></Route>
-              <Route exact path='/Profile' component={Profile}></Route>
+              <Route exact path='/profile/:username?' component={Profile}></Route>
             </Switch>
           </>
         </Router>
