@@ -18,17 +18,14 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      friendCount
-      friends {
-        _id
+      reviews {
+        title
+      }
+      reviewsCount 
+      follow {
         username
       }
-      thoughts {
-        _id
-        thoughtText
-        createdAt
-        reactionCount
-      }
+      followCount
     }
   }
 `;
@@ -39,23 +36,18 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      friendCount
-      thoughts {
+      reviews {
         _id
-        thoughtText
+        title
+        reviewBody
         createdAt
-        reactionCount
-        reactions {
-          _id
-          createdAt
-          reactionBody
-          username
-        }
       }
-      friends {
+      reviewCount
+      follows {
         _id
         username
       }
+      followCount
     }
   }
 `;

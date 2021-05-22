@@ -38,7 +38,6 @@ const resolvers = {
                 .populate('follows')
                 .populate('reviews');
         },
-
     },
     Mutation: {
         addUser: async (parent, args) => {
