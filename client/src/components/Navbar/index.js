@@ -15,18 +15,18 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar variant='dark' expand='lg'>
         <Container fluid>
-          
+
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-          <Nav.Link as={Link} to='/'>
-            <FontAwesomeIcon
-              icon='cube'
-              size='2x'
-            />
-          </Nav.Link>
-          
+            <Nav.Link as={Link} to='/'>
+              <FontAwesomeIcon
+                icon='cube'
+                size='2x'
+              />
+            </Nav.Link>
+
             <Nav className='ml-auto'>
               {/* <div className="rightSide">
               <input type="text" placeholder="Enter Game Title"></input>
@@ -34,8 +34,13 @@ const AppNavbar = () => {
               </div> */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/Profile'>My Bloc Dashboard</Nav.Link>
-                  <Nav.Link onClick={() => setShowReviewModal(true)}>Add Review</Nav.Link>
+                  <Nav.Link onClick={() => setShowReviewModal(true)}>               
+                  <FontAwesomeIcon
+                    icon='plus-square'
+                    color='green'
+                    size='lg'
+                  />  Write New Bloc</Nav.Link>
+                  <Nav.Link as={Link} to='/Profile'>My Profile</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
@@ -94,7 +99,7 @@ const AppNavbar = () => {
             <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
           </Modal.Body>
         </Tab.Container>
-      </Modal>    
+      </Modal>
     </>
   );
 };

@@ -1,5 +1,13 @@
+:root {
+  --background: #131a22;
+  --primary: #4361ee;
+  --secondary: #4CC9F0;
+  --tertiary: #fff;
+  --title: #3a0ca3;
+}
+
 .App {
-  text-align: center;
+  background-color: var(--background);
 }
 
 .App-logo {
@@ -42,4 +50,31 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 28px;
+}
+
+.review-title {
+  font-weight: bolder;
+  font-size: 80%;
+  color: var(--secondary);
+}
+
+.review-text {
+  font-style: italic;
+  font-size: 90%;
+  color: var(--tertiary);
+}
+
+.bloc-box {
+  padding: 20px;
+  border-color: var(--tertiary);
+}
+
+.small-title {
+  color: var(--tertiary);
+  padding-left: 20px;
+}
+
+.username-link {
+  font-size: 80%;
+color: var(--tertiary);
 }

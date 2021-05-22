@@ -39,7 +39,7 @@ const Profile = () => {
       </h4>
     );
   }
-  console.log("Profile.js ==========",user.username, loading, data)
+  console.log("Profile.js ==========", user.follows)
 
   const handleClick = async () => {
     try {
@@ -75,9 +75,9 @@ const Profile = () => {
        
         <div className="col-12 col-lg-3 mb-3">
           <FollowingList
-            username={user.username}
             followCount={user.followCount}
-            followers={user.followers}
+            username={user.username}
+            follows={user.follows}
           />
         </div>
       </div>

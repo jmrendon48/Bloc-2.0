@@ -20,6 +20,7 @@ const Home = () => {
                 </div>
             </div>
             <div>
+                <h5 className='small-title'>Popular Reviews For This Week</h5>
             {loading ? (
                 <div>Loading...</div>
             ) : (
