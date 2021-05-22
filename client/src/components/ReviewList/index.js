@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+
 
 const ReviewList = ({reviews}) => {
   if (!reviews.length) {
@@ -22,7 +24,16 @@ const ReviewList = ({reviews}) => {
           </div>
           
           <div className="meta row pl-3">
-            <h4>by {review.username} on {review.createdAt}</h4>
+          <p className="card-header">
+              <Link
+                to={`/profile/${review.username}`}
+                style={{ fontWeight: 700 }}
+                className="text-light"
+              >
+                {review.username}
+              </Link>{' '}
+                {review.createdAt}
+            </p>
           </div>
         </div>
       ))}

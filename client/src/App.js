@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
 import './components/FontAwesome';
-
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -33,8 +32,9 @@ function App() {
             <Navbar />
             <Switch>
               <Route exact path='/' component={Home}></Route>
-              <Route exact path='/Search' component={gamePage}></Route>
-              <Route exact path='/Profile' component={Profile}></Route>
+              <Route exact path='/search' component={gamePage}></Route>
+              <Route exact path='/profile:username?' component={Profile}></Route>
+
             </Switch>
           </>
         </Router>
