@@ -15,14 +15,18 @@ export const QUERY_REVIEWS = gql`
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
-      _id
+     _id
       username
       email
       reviews {
+        _id
         title
+        reviewBody
+        createdAt
       }
-      reviewsCount 
-      follow {
+      reviewCount
+      follows {
+        _id
         username
       }
       followCount
