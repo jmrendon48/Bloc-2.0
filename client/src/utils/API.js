@@ -29,5 +29,6 @@ export const getGameCover = (coverId) => {
             "Authorization": 'Bearer 1cv3ma8y8rj7im3gm6sb8izgzsycox',
         },
         body: dataSearch
+        //to use this must grab image_id from data object then input it into `https://images.igdb.com/igdb/image/upload/t_1080p/${image_id}.jpg` to get image
     })
 }
