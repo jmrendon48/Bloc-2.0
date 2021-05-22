@@ -1,65 +1,12 @@
-// import  React, { useState} from "react";
-// import { searchGame } from "../utils/API"
-
-// const gamePage = () => {
-// 	const [games, setGames] = useState([]);
-// 	const [searchValue, setSearchValue] = useState("");
-
-//     const handleFormSubmit = async (event) => {
-//         event.preventDefault();
-
-//         if(!searchValue) {return false}
-    
-//         try {
-//           const response = await searchGame(searchValue);
-    
-//           if (!response.ok) {
-//             throw new Error('something went wrong!');
-//           }
-//           const { data } = await response.json;
-
-//           const gameData = data.map((game) =>{
-//               console.log(game)
-//           })
-
-          
-//           setSearchValue('')
-//           console.log(response)
-          
-//         } catch (err) {
-//           console.error(err);
-//         }
-//       };
-
-// 	return (
-// 		<div className='container-fluid'>
-//             <form id="searchValue">
-//             <input value={searchValue} onchange={setSearchValue} placeholder='Type to search...'></input>
-//             <button type= "submit" onSubmit={handleFormSubmit}>Submit</button>
-// 			</form>
-// 		</div>
-// 	);
-// };
-
-// export default gamePage;
-import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Jumbotron, Container, Col, Form, Button, Card} from 'react-bootstrap';
 import { searchGame } from "../utils/API"
 
 const SearchBooks = () => {
-  // create state for holding returned google api data
+
   const [ games, setGames] = useState([]);
-  // create state for holding our search field data
+
   const [searchInput, setSearchInput] = useState('');
-
-  // create state to hold saved bookId values
-
-
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-
-
-  // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -69,13 +16,25 @@ const SearchBooks = () => {
     
     try {
       const response = await searchGame(searchInput);
-        console.log("1~~~~~~~~~~~~~~~~~~~~~~~~",response)
-    //   if (!response.ok) {
-    //     throw new Error('something went wrong!');
-    //   }
-      const convertJSON = response.json()
-      console.log("2~~~~~~~~~~~~~~~~~~~~",convertJSON)
-      const { items } = await response.json();
+        
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+
+      const  items  = await response.json();
+      
+      console.log(items)
+
+      const gameData = items.map((game)=>({
+       id: game.id,
+       name: game.name,
+       cover: game.cover,
+       first_release_date: game.release,
+       summary: game.summary
+      }));
+
+
+      setGames(gameData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -101,17 +60,38 @@ const SearchBooks = () => {
                   placeholder='Search for a Game'
                 />
               </Col>
-              <Col xs={12} md={4}>
+              
                 <Button type='submit' variant='success' size='lg'>
                   Submit Search
                 </Button>
-              </Col>
+              
             </Form.Row>
           </Form>
         </Container>
       </Jumbotron>
+
+      <Container className="col-3">
+        <h2>
+          {games.length
+            ? `Viewing ${games.length} results:`
+            : 'Search for a book to begin'}
+        </h2>
+        <Card style={{ width: '18rem' }}>
+          {games.map((game) => {
+            return (
+              <Card  key={game.id} border='dark'>
+                {game.cover ? ( 
+                  <Card.Img src={game.cover} alt={`The cover for ${game.name}`} variant='top' />
+                ) : null}
+                <Card.Title>{game.name}</Card.Title>
+              </Card>
+            );
+          })}
+        </Card>
+      </Container>
     </>
   );
 };
-
+//remember the picture api (james will do it)
+//when clicking on picture link to game page
 export default SearchBooks;
