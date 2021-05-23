@@ -5,7 +5,6 @@ import { searchGame } from "../utils/API";
 
 const SearchBooks = () => {
   const [games, setGames] = useState([]);
-  const [clickedGameData, setClickedGameData] = useState("");
 
   const history = useHistory();
 
@@ -32,7 +31,7 @@ const SearchBooks = () => {
         id: game.id,
         name: game.name,
         cover: game.cover,
-        first_release_date: game.release,
+        first_release_date: game.first_release_date,
         summary: game.summary,
       }));
 
@@ -42,18 +41,6 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-
-  const gameClicked = async (id, name) => {
-    const gameToLink = games.find((game) => game.id === id);
-    setClickedGameData(gameToLink);
-
-    history.push({
-      pathname: `/gamepage/${name}`,
-      state: {name: "josh"},
-    });
-  };
-
-  console.log(clickedGameData);
 
   return (
     <>
@@ -100,11 +87,17 @@ const SearchBooks = () => {
                 ) : null}
                 <Card.Title>
                   <Link
-                    // to={`/gamepage/${game.name}`}
+                    to={{
+                      pathname: `/gamepage/${game.name}`,
+                      state: {
+                        name: `${game.name}`,
+                        coverId: `${game.cover}`,
+                        summary: `${game.summary}`,
+                        first_release_date: `${game.first_release_date}`,
+                      },
+                    }}
                     style={{ fontWeight: 700 }}
                     className="text-light"
-                    onClick={() => gameClicked(game.id, game.name)}
-                    // clickedGameData={clickedGameData}
                   >
                     {game.name}
                   </Link>
