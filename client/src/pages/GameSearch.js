@@ -1,70 +1,68 @@
-import React, { useState } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card} from 'react-bootstrap';
-import { searchGame } from "../utils/API"
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
+import { searchGame } from "../utils/API";
 
 const SearchBooks = () => {
+  const [games, setGames] = useState([]);
 
-  const [ games, setGames] = useState([]);
+  const history = useHistory();
 
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (!searchInput) {
       return false;
     }
-    
+
     try {
       const response = await searchGame(searchInput);
-        
+
       if (!response.ok) {
-        throw new Error('something went wrong!');
+        throw new Error("something went wrong!");
       }
 
-      const  items  = await response.json();
-      
-      console.log(items)
+      const items = await response.json();
 
-      const gameData = items.map((game)=>({
-       id: game.id,
-       name: game.name,
-       cover: game.cover,
-       first_release_date: game.release,
-       summary: game.summary
+      console.log(items);
+
+      const gameData = items.map((game) => ({
+        id: game.id,
+        name: game.name,
+        cover: game.cover,
+        first_release_date: game.first_release_date,
+        summary: game.summary,
       }));
 
-
       setGames(gameData);
-      setSearchInput('');
+      setSearchInput("");
     } catch (err) {
       console.error(err);
     }
   };
 
- 
-
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className="text-light bg-dark">
         <Container>
           <h1>Search for a Game</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
-                  name='searchInput'
+                  name="searchInput"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a Game'
+                  type="text"
+                  size="lg"
+                  placeholder="Search for a Game"
                 />
               </Col>
-              
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              
+
+              <Button type="submit" variant="success" size="lg">
+                Submit Search
+              </Button>
             </Form.Row>
           </Form>
         </Container>
@@ -74,16 +72,36 @@ const SearchBooks = () => {
         <h2>
           {games.length
             ? `Viewing ${games.length} results:`
-            : 'Search for a book to begin'}
+            : "Search for a book to begin"}
         </h2>
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: "18rem" }}>
           {games.map((game) => {
             return (
-              <Card  key={game.id} border='dark'>
-                {game.cover ? ( 
-                  <Card.Img src={game.cover} alt={`The cover for ${game.name}`} variant='top' />
+              <Card key={game.id} border="dark">
+                {game.cover ? (
+                  <Card.Img
+                    src={game.cover}
+                    alt={`The cover for ${game.name}`}
+                    variant="top"
+                  />
                 ) : null}
-                <Card.Title>{game.name}</Card.Title>
+                <Card.Title>
+                  <Link
+                    to={{
+                      pathname: `/gamepage/${game.name}`,
+                      state: {
+                        name: `${game.name}`,
+                        coverId: `${game.cover}`,
+                        summary: `${game.summary}`,
+                        first_release_date: `${game.first_release_date}`,
+                      },
+                    }}
+                    style={{ fontWeight: 700 }}
+                    className="text-light"
+                  >
+                    {game.name}
+                  </Link>
+                </Card.Title>
               </Card>
             );
           })}

@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from '../SignUp/index';
 import LoginForm from '../Login/index';
-import ReviewForm from '../ReviewForm/index';
 
 import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
   // set modal display state
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showReviewModal, setShowReviewModal] = useState(false);
 
   return (
     <>
@@ -34,12 +32,6 @@ const AppNavbar = () => {
               </div> */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link onClick={() => setShowReviewModal(true)}>               
-                  <FontAwesomeIcon
-                    icon='plus-square'
-                    color='green'
-                    size='lg'
-                  />  Write New Bloc</Nav.Link>
                   <Nav.Link as={Link} to='/Profile'>My Profile</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
@@ -79,24 +71,6 @@ const AppNavbar = () => {
                 <SignUpForm handleModalClose={() => setShowLoginModal(false)} />
               </Tab.Pane>
             </Tab.Content>
-          </Modal.Body>
-        </Tab.Container>
-      </Modal>
-      {/* Add Review Modal */}
-      <Modal
-        size='lg'
-        show={showReviewModal}
-        onHide={() => setShowReviewModal(false)}
-        aria-labelledby='signup-modal'>
-        {/* tab container to do either signup or login component */}
-        <Tab.Container defaultActiveKey='login'>
-          <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              Add Review
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ReviewForm handleModalClose={() => setShowReviewModal(false)} />
           </Modal.Body>
         </Tab.Container>
       </Modal>
