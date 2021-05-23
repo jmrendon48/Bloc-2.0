@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { ADD_REVIEW } from "../../utils/mutations";
 import { QUERY_REVIEWS } from "../../utils/queries";
 
-const ReviewForm = ({ gameTitle, gameCoverUrl }) => {
+const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
   console.log(gameTitle);
   const [addReview, { error }] = useMutation(ADD_REVIEW, {
     update(cache, { data: { addReview } }) {
@@ -23,7 +23,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl }) => {
 
   const [reviewBody, setReviewBody] = useState("");
   const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
-
+  
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
       setTitle(event.target.value);
@@ -52,6 +52,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl }) => {
       setTitleCharacterCount(0);
       setReviewBody("");
       SetReviewBodyCharacterCount(0);
+      setShowReviewModal(false);
     } catch (e) {
       console.error(e);
     }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_REVIEWGAME } from "../utils/queries";
 import {
   Jumbotron,
   Modal,
@@ -13,37 +15,34 @@ import {
 } from "react-bootstrap";
 import ReviewForm from "../components/ReviewForm/index";
 import ReviewList from "../components/ReviewList/index";
-import { useQuery } from "@apollo/react-hooks";
-import { QUERY_REVIEWGAME } from "../utils/queries";
 
 const GamePage = (props) => {
+  // const { name, coverId } = props.location.state
+  const gameCoverUrl = props.location.state.coverId;
+  const gameTitle = props.location.state.name;
+  const summary = props.location.state.summary;
+  const first_release_date = props.location.state.first_release_date;
+  
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const { gameTitle: userParam } = useParams();
-
+  
   const { loading, data } = useQuery(QUERY_REVIEWGAME, {
-    variables: { gameTitle: userParam },
+    variables: { gameTitle: gameTitle },
   });
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  const reviews = data?.gameTitle || {};
-
-  // const { name, coverId } = props.location.state
-  const gameCoverUrl = props.location.state.coverId;
-  const name = props.location.state.name;
-  const summary = props.location.state.summary;
-  const first_release_date = props.location.state.first_release_date;
+  console.log(data);
+  const reviews = data?.reviewGame || {};
 
   return (
     <>
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
-            {name} ({first_release_date})
+            {gameTitle} ({first_release_date})
           </Card.Title>
-          <Card.Img src={gameCoverUrl} alt={`The cover for ${name}`} variant="top" />
+          <Card.Img src={gameCoverUrl} alt={`The cover for ${gameTitle}`} variant="top" />
           <Card.Body>{summary}</Card.Body>
           <Card.Link onClick={() => setShowReviewModal(true)}>
             <FontAwesomeIcon icon="plus-square" color="green" size="lg" /> Write
@@ -67,8 +66,9 @@ const GamePage = (props) => {
         <Modal.Body>
           <ReviewForm
             handleModalClose={() => setShowReviewModal(false)}
-            gameTitle={name}
+            gameTitle={gameTitle}
             gameCoverUrl={gameCoverUrl}
+            setShowReviewModal={setShowReviewModal}
           />
         </Modal.Body>
       </Modal>
