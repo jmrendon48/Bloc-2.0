@@ -9,6 +9,12 @@ const reviewSchema = new Schema(
       minlength: 1,
       maxlength: 30
     },
+    gameTitle: {
+      type: String,
+    },
+    gameCoverUrl: {
+      type: String,
+    },
     reviewBody: {
       type: String,
       required: 'You need to leave a review!',
