@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_REVIEW } from "../../utils/mutations";
-import { QUERY_REVIEWS } from '../../utils/queries';
+import { QUERY_REVIEWS } from "../../utils/queries";
 
-const ReviewForm = () => {
+const ReviewForm = ({ gameTitle, gameCoverUrl }) => {
+  console.log(gameTitle);
   const [addReview, { error }] = useMutation(ADD_REVIEW, {
     update(cache, { data: { addReview } }) {
       // read what's currently in the cache
       const { reviews } = cache.readQuery({ query: QUERY_REVIEWS });
-  
+
       // prepend the newest thought to the front of the array
       cache.writeQuery({
         query: QUERY_REVIEWS,
-        data: { reviews: [addReview, ...reviews] }
+        data: { reviews: [addReview, ...reviews] },
       });
-    }
+    },
   });
 
   const [title, setTitle] = useState("");
@@ -43,7 +44,7 @@ const ReviewForm = () => {
     try {
       // add thought to database
       await addReview({
-        variables: { title, reviewBody },
+        variables: { title, gameTitle, gameCoverUrl, reviewBody },
       });
 
       // clear form value
