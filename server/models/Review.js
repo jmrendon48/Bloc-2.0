@@ -11,13 +11,9 @@ const reviewSchema = new Schema(
     },
     gameTitle: {
       type: String,
-      required: 'You need a game title',
-      minlength: 1
     },
     gameCoverUrl: {
       type: String,
-      required: 'You need a game cover url',
-      minlength: 1
     },
     reviewBody: {
       type: String,
