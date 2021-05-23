@@ -34,7 +34,7 @@ function App() {
             <Switch>
               <Route exact path='/' component={Home}></Route>
               <Route exact path='/search' component={gameSearch}></Route>
-              <Route exact path='/gamepage/' component={GamePage}></Route>
+              <Route exact path='/gamepage/:name' component={GamePage}></Route>
               <Route exact path='/profile/:username?' component={Profile}></Route>
             </Switch>
           </>

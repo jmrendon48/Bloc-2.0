@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
 
 const SearchBooks = () => {
   const [games, setGames] = useState([]);
+  const [clickedGameData, setClickedGameData] = useState("");
+
+  const history = useHistory();
 
   const [searchInput, setSearchInput] = useState("");
   const handleFormSubmit = async (event) => {
@@ -39,6 +42,18 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+
+  const gameClicked = async (id, name) => {
+    const gameToLink = games.find((game) => game.id === id);
+    setClickedGameData(gameToLink);
+
+    history.push({
+      pathname: `/gamepage/${name}`,
+      state: {name: "josh"},
+    });
+  };
+
+  console.log(clickedGameData);
 
   return (
     <>
@@ -85,9 +100,11 @@ const SearchBooks = () => {
                 ) : null}
                 <Card.Title>
                   <Link
-                    to={'/gamepage/'}
+                    // to={`/gamepage/${game.name}`}
                     style={{ fontWeight: 700 }}
                     className="text-light"
+                    onClick={() => gameClicked(game.id, game.name)}
+                    // clickedGameData={clickedGameData}
                   >
                     {game.name}
                   </Link>
