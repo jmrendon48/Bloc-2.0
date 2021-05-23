@@ -22,12 +22,14 @@ const GamePage = (props) => {
   const gameTitle = props.location.state.name;
   const summary = props.location.state.summary;
   const first_release_date = props.location.state.first_release_date;
-  
+
   const [showReviewModal, setShowReviewModal] = useState(false);
-  
+
   const { loading, data } = useQuery(QUERY_REVIEWGAME, {
     variables: { gameTitle: gameTitle },
   });
+
+  const reload=()=>window.location.reload();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,7 +44,11 @@ const GamePage = (props) => {
           <Card.Title>
             {gameTitle} ({first_release_date})
           </Card.Title>
-          <Card.Img src={gameCoverUrl} alt={`The cover for ${gameTitle}`} variant="top" />
+          <Card.Img
+            src={gameCoverUrl}
+            alt={`The cover for ${gameTitle}`}
+            variant="top"
+          />
           <Card.Body>{summary}</Card.Body>
           <Card.Link onClick={() => setShowReviewModal(true)}>
             <FontAwesomeIcon icon="plus-square" color="green" size="lg" /> Write
@@ -58,6 +64,7 @@ const GamePage = (props) => {
         show={showReviewModal}
         onHide={() => setShowReviewModal(false)}
         aria-labelledby="signup-modal"
+        onExit={reload}
       >
         {/* tab container to do either signup or login component */}
         <Modal.Header closeButton>
