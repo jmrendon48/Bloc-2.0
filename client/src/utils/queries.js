@@ -55,3 +55,17 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_REVIEWGAME = gql `
+  query reviewGame($gameTitle: String!) {
+    reviewGame(gameTitle: $gameTitle) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody  
+      createdAt
+      username
+    }
+  }
+`

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
 
 const SearchBooks = () => {
   const [games, setGames] = useState([]);
-
-  const history = useHistory();
-
+  
   const [searchInput, setSearchInput] = useState("");
   const handleFormSubmit = async (event) => {
     event.preventDefault();

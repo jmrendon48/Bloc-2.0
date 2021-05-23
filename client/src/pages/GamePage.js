@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useHistory, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Jumbotron, Modal, Tab, Container, Col, Form, Button, Card } from "react-bootstrap";
 import ReviewForm from "../components/ReviewForm/index";
+import ReviewList from "../components/ReviewList/index";
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_USER } from '../utils/queries';
 
 const GamePage = (props) => {
   // const { name, coverId } = props.location.state
