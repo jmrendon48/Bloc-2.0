@@ -3,26 +3,25 @@ import { Link, useHistory } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame, getGameCover } from "../utils/API";
 
-const makeUrl = (coverId) => {
-      const response = getGameCover(coverId)
-      const data = JSON.stringify(response);
-      console.log("--------------------hello------------------", data);
-      const imageId = response[0].imageId
-      const setUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${imageId}.jpg`
-      return setUrl
-
-} 
-
-
 const SearchBooks = () => {
   const [games, setGames] = useState([]);
 
   const history = useHistory();
 
   const [searchInput, setSearchInput] = useState("");
-  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    // function updateObject(objects) {
+    //   return objects.map((object) => {
+    //     Object.keys(object).forEach((coverUrl) => {
+    //       object[coverUrl] = getGameCover(object.cover)
+    //       console.log('hello', objects[coverUrl])
+    //     }) 
+    //   })
+    // }
+
 
     if (!searchInput) {
       return false;
@@ -37,19 +36,17 @@ const SearchBooks = () => {
 
       const items = await response.json();
 
-      console.log(items);
-
       const gameData = items.map((game) => (
         {
           id: game.id,
           name: game.name,
           cover: game.cover,
+          coverUrl: "",
+          // coverUrl: getGameCover(game.cover),
           first_release_date: game.first_release_date,
           summary: game.summary,
         }));
-        for(let i=0;  i<gameData.length; i++) {
-          gameData[i].coverUrl=makeUrl(gameData[i].cover)
-        }
+        updateObject(gameData)
       setGames(gameData);
       setSearchInput("");
 
@@ -97,7 +94,8 @@ const SearchBooks = () => {
                 {game.cover ? (
                   <Card.Img
                     src={game.coverUrl}
-                    alt={`The cover for ${game.name}`}
+                    // alt={`The cover for ${getGameCover(game.coverUrl)}`}
+                    alt={`the cover for ${game.coverUrl} and ${game.name}`}
                     variant="top"
                   />
                 ) : null}
@@ -126,6 +124,6 @@ const SearchBooks = () => {
     </>
   );
 };
-//remember the picture api (james will do it)
+//remember the picture api (james will do it) maybe and is very stuck- james 
 //when clicking on picture link to game page
 export default SearchBooks;

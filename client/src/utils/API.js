@@ -5,6 +5,7 @@ const auth = process.env.twitch_auth
 export const searchGame = (query) => {
     console.log("from API", client, auth)
     const dataSearch = ` fields age_ratings,aggregated_rating,aggregated_rating_count,alternative_names,artworks,bundles,category,checksum,collection,cover,created_at,dlcs,expanded_games,expansions,external_games,first_release_date,follows,forks,franchise,franchises,game_engines,game_modes,genres,hypes,involved_companies,keywords,multiplayer_modes,name,parent_game,platforms,player_perspectives,ports,rating,rating_count,release_dates,remakes,remasters,screenshots,similar_games,slug,standalone_expansions,status,storyline,summary,tags,themes,total_rating,total_rating_count,updated_at,url,version_parent,version_title,videos,websites;
+    limit 1;
     search"${query}";`
     return fetch(`https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/games`, {
         method: "POST",
@@ -21,6 +22,7 @@ export const searchGame = (query) => {
 
 export const getGameCover = (coverId) => {
     const dataSearch = `fields *; where id = ${coverId};`;
+    console.log(coverId)
     fetch(`https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/covers`, {
         method: "POST",
         headers: {
@@ -30,5 +32,16 @@ export const getGameCover = (coverId) => {
         },
         body: dataSearch
         //to use this must grab image_id from data object then input it into `https://images.igdb.com/igdb/image/upload/t_1080p/${image_id}.jpg` to get image
-    })
+    }).then(function (data1) {
+        console.log("3-----------------", data1)
+        return data1.json()
+    }).then(response => {
+        console.log("4-----------------", response)
+        const hash = response[0].image_id;
+        const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
+        console.log("5====================",link)
+        return link;
+    }).catch(err => {
+        console.error(err);
+    });
 }
