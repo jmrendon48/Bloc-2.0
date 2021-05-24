@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { ADD_REVIEW } from "../../utils/mutations";
 import { QUERY_REVIEWS } from "../../utils/queries";
 
-const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
+const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
   console.log(gameTitle);
   const [addReview, { error }] = useMutation(ADD_REVIEW, {
     update(cache, { data: { addReview } }) {
@@ -23,7 +23,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
 
   const [reviewBody, setReviewBody] = useState("");
   const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
-  
+
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
       setTitle(event.target.value);
@@ -58,6 +58,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
     }
   };
 
+
   return (
     <div>
       <form
@@ -73,6 +74,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
         <p className={`m-0 ${titleCharacterCount === 30 ? "text-error" : ""}`}>
           Character Count: {titleCharacterCount}/30
         </p>
+        
         <textarea
           placeholder="Here's a new review..."
           value={reviewBody}
@@ -80,12 +82,12 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal}) => {
           onChange={handlereviewBodyChange}
         ></textarea>
         <p
-          className={`m-0 ${
-            reviewBodyCharacterCount === 1000 ? "text-error" : ""
-          }`}
+          className={`m-0 ${reviewBodyCharacterCount === 1000 ? "text-error" : ""
+            }`}
         >
           Character Count: {reviewBodyCharacterCount}/1000
         </p>
+
         {error && <span className="ml-2">Something went wrong...</span>}
         <button className="btn col-12 col-md-3" type="submit">
           Submit

@@ -27,13 +27,10 @@ const AppNavbar = () => {
             </Nav.Link>
 
             <Nav className='ml-auto'>
-              {/* <div className="rightSide">
-              <input type="text" placeholder="Enter Game Title"></input>
-              <button>Search</button>
-              </div> */}
+            <Nav.Link as={Link} to='/search'> Game Search </Nav.Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/Profile'>My Profile</Nav.Link>
+                  <Nav.Link as={Link} to='/profile'>My Profile</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
@@ -43,7 +40,6 @@ const AppNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Nav.Link as={Link} to='/Profile'>My Profile</Nav.Link>
       {/* Login / Sign Up Modal */}
       <Modal
         size='lg'

@@ -8,6 +8,7 @@
 
 .App {
   background-color: var(--background);
+  height: 500vh;
 }
 
 .App-logo {
@@ -77,4 +78,19 @@
 .username-link {
   font-size: 80%;
 color: var(--tertiary);
+}
+
+.following-list{
+  justify-content: right;
+  background-color: var(--secondary);
+
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 200ms;
 }

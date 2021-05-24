@@ -14,7 +14,7 @@ const Profile = () => {
   const [followUser] = useMutation(FOLLOW_USER);
 
   const { username: userParam } = useParams();
-  
+
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam }
   });
@@ -33,8 +33,12 @@ const Profile = () => {
     return (
       <h4>
         You need to be logged in to see this page. Use the navigation links above to sign up or log in!
-        <div>
-          Viewing {`${user.username}'s`} Bloc profile.
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container banner">
+            <h1 class="display-4 banner">
+              Viewing {`${user.username}'s`} Bloc profile.
+            </h1>
+          </div>
         </div>
       </h4>
     );
@@ -53,33 +57,33 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="flex-row mb-3">
-        <h2 className="text-secondary p-3 display-inline-block">
-          Viewing {userParam ? `${user.username}'s` : 'your'} Bloc profile.
+      <div class="jumbotron jumbotron-fluid">
+        <div class="display-4 banner">
+          <h2 class="display-4 banner">
+            Viewing {userParam ? `${user.username}'s` : 'your'} Bloc profile.
         </h2>
 
-        {userParam && (
-          <button className="btn ml-auto" onClick={handleClick}>
-            Follow User
-          </button>
-        )}
+          {userParam && (
+            <button className="btn btn-primary ml-auto" onClick={handleClick}>
+              Follow User
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="flex-row justify-space-between mb-3">
-        <div className="col-12 mb-3 col-lg-8">
-          <ReviewList reviews={user.reviews}/>
-           <h1>
-          TEST
-        </h1>
-        </div>
-       
-        <div className="col-12 col-lg-3 mb-3">
+      <div className="col-12 col-lg-2 mb-3 following-list rounded">
           <FollowingList
             followCount={user.followCount}
             username={user.username}
             follows={user.follows}
           />
         </div>
+
+      <div className="flex-row justify-space-between mb-3">
+        <div className="col-12 mb-3 col-lg-8">
+          <ReviewList reviews={user.reviews} />
+        </div>
+
       </div>
     </div>
   );

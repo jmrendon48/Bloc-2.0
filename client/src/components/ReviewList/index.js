@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const ReviewList = ({ reviews }) => {
@@ -19,6 +20,15 @@ const ReviewList = ({ reviews }) => {
           <h3 className="bloc-box ml-3">
             <a className='review-title'>{review.title}</a>
           </h3>
+
+          {/* <div>
+            {[...Array(5)].map((star, i) => {
+                <FontAwesomeIcon className='star'
+                  icon='star'
+                  size='2x'
+                />
+            })}
+          </div> */}
 
           <div >
             <div className="row">
