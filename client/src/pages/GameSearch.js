@@ -1,12 +1,29 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame, getGameCover } from "../utils/API";
 
-const SearchBooks = () => {
-  const [games, setGames] = useState([]);
+// const makeUrl = (coverId) => {
+//     try {
+//       const response = getGameCover(coverId);
 
-  const history = useHistory();
+//       if (!response.ok) {
+//         throw new Error("something went wrong!");
+//       }
+
+//       const items = response.json();
+//       console.log("--------------------hello------------------",items);
+//       const imageId = items[0].imageId
+//       const setUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${imageId}.jpg`
+//       return setUrl
+
+//     } catch (err) {
+//       console.error(err);
+//     }
+// }
+
+const GameSearch = () => {
+  const [games, setGames] = useState([]);
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -49,7 +66,6 @@ const SearchBooks = () => {
         updateObject(gameData)
       setGames(gameData);
       setSearchInput("");
-
     } catch (err) {
       console.error(err);
     }
@@ -126,4 +142,4 @@ const SearchBooks = () => {
 };
 //remember the picture api (james will do it) maybe and is very stuck- james 
 //when clicking on picture link to game page
-export default SearchBooks;
+export default GameSearch;

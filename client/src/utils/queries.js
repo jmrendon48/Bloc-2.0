@@ -1,10 +1,12 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const QUERY_REVIEWS = gql`
   query reviews($username: String) {
     reviews(username: $username) {
       _id
       title
+      gameTitle
+      gameCoverUrl
       reviewBody
       createdAt
       username
@@ -15,7 +17,7 @@ export const QUERY_REVIEWS = gql`
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
-     _id
+      _id
       username
       email
       reviews {
@@ -52,6 +54,20 @@ export const QUERY_ME = gql`
         username
       }
       followCount
+    }
+  }
+`;
+
+export const QUERY_REVIEWGAME = gql`
+  query reviewGame($gameTitle: String!) {
+    reviewGame(gameTitle: $gameTitle) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody
+      createdAt
+      username
     }
   }
 `;

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
@@ -25,10 +25,22 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_REVIEW = gql`
-  mutation addReview($title: String!, $reviewBody: String!) {
-    addReview(title: $title, reviewBody: $reviewBody) {
+  mutation addReview(
+    $title: String!
+    $gameTitle: String!
+    $gameCoverUrl: String!
+    $reviewBody: String!
+  ) {
+    addReview(
+      title: $title
+      gameTitle: $gameTitle
+      gameCoverUrl: $gameCoverUrl
+      reviewBody: $reviewBody
+    ) {
       _id
       title
+      gameTitle
+      gameCoverUrl
       reviewBody
       createdAt
       username
