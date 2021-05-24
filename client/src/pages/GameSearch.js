@@ -3,22 +3,30 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame, getGameCover } from "../utils/API";
 
-const makeUrl = (coverId) => {
-      const response = getGameCover(coverId)
-      const data = JSON.stringify(response);
-      console.log("--------------------hello------------------", data);
-      const imageId = response[0].imageId
-      const setUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${imageId}.jpg`
-      return setUrl
+// const makeUrl = (coverId) => {
+//     try {
+//       const response = getGameCover(coverId);
 
-} 
+//       if (!response.ok) {
+//         throw new Error("something went wrong!");
+//       }
 
+//       const items = response.json();
+//       console.log("--------------------hello------------------",items);
+//       const imageId = items[0].imageId
+//       const setUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${imageId}.jpg`
+//       return setUrl
+
+//     } catch (err) {
+//       console.error(err);
+//     }
+// }
 
 const GameSearch = () => {
   const [games, setGames] = useState([]);
-  
+
   const [searchInput, setSearchInput] = useState("");
-  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,20 +45,19 @@ const GameSearch = () => {
 
       console.log(items);
 
-      const gameData = items.map((game) => (
-        {
-          id: game.id,
-          name: game.name,
-          cover: game.cover,
-          first_release_date: game.first_release_date,
-          summary: game.summary,
-        }));
-        for(let i=0;  i<gameData.length; i++) {
-          gameData[i].coverUrl=makeUrl(gameData[i].cover)
-        }
+      const gameData = items.map((game) => ({
+        id: game.id,
+        name: game.name,
+        cover: game.cover,
+        first_release_date: game.first_release_date,
+        summary: game.summary,
+      }));
+      console.log(gameData[0].cover);
+      // for(let i=0;  i<gameData.length; i++) {
+      //   makeUrl(gameData[i].cover)
+      // }
       setGames(gameData);
       setSearchInput("");
-
     } catch (err) {
       console.error(err);
     }
@@ -91,32 +98,30 @@ const GameSearch = () => {
         <Card style={{ width: "18rem" }}>
           {games.map((game) => {
             return (
-              <Card key={game.id} border="dark">
-                {game.cover ? (
-                  <Card.Img
-                    src={game.coverUrl}
-                    alt={`The cover for ${game.name}`}
-                    variant="top"
-                  />
-                ) : null}
-                <Card.Title>
-                  <Link
-                    to={{
-                      pathname: `/gamepage/${game.name}`,
-                      state: {
-                        name: `${game.name}`,
-                        coverId: `${game.cover}`,
-                        summary: `${game.summary}`,
-                        first_release_date: `${game.first_release_date}`,
-                      },
-                    }}
-                    style={{ fontWeight: 700 }}
-                    className="text-light"
-                  >
-                    {game.name}
-                  </Link>
-                </Card.Title>
-              </Card>
+              <Link
+                to={{
+                  pathname: `/gamepage/${game.name}`,
+                  state: {
+                    name: `${game.name}`,
+                    coverId: `${game.cover}`,
+                    summary: `${game.summary}`,
+                    first_release_date: `${game.first_release_date}`,
+                  },
+                }}
+                style={{ fontWeight: 700 }}
+                className="text-light"
+              >
+                <Card key={game.id} border="dark">
+                  {game.cover ? (
+                    <Card.Img
+                      src={game.coverUrl}
+                      alt={`The cover for ${game.name}`}
+                      variant="top"
+                    />
+                  ) : null}
+                  <Card.Title>{game.name}</Card.Title>
+                </Card>
+              </Link>
             );
           })}
         </Card>
