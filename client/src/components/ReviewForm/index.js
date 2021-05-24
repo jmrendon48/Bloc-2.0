@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_REVIEW } from "../../utils/mutations";
 import { QUERY_REVIEWS } from "../../utils/queries";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
   console.log(gameTitle);
@@ -58,6 +59,38 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
     }
   };
 
+  const StarRating = () => {
+    const [rating, setRating] = useState(null)
+    const [hover, setHover] = useState(null)
+
+    return (
+      <div>
+        {[...Array(5)].map((star, i) => {
+          const ratingValue = i + 1;
+
+          return (
+            <label>
+              <input 
+              type='radio' 
+              name='rating' 
+              value={ratingValue} 
+              onClick={() => setRating(ratingValue)}
+              />
+              <FontAwesomeIcon className='star'
+                icon='star'
+                size='2x'
+                color= {ratingValue <= (hover || rating) ? '#ffc107' : '#e4e5e9'}
+                onMouseEnter={() => setHover(ratingValue)}
+                onMouseLeave={() => setHover(null)}
+              />
+            </label>
+          )
+        })}
+        <h5> {rating}/5 Stars </h5>
+      </div>
+    )
+  }
+
 
   return (
     <div>
@@ -74,7 +107,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
         <p className={`m-0 ${titleCharacterCount === 30 ? "text-error" : ""}`}>
           Character Count: {titleCharacterCount}/30
         </p>
-        
+
         <textarea
           placeholder="Here's a new review..."
           value={reviewBody}
@@ -93,6 +126,9 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
           Submit
         </button>
       </form>
+
+      <StarRating />
+
     </div>
   );
 };
