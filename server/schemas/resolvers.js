@@ -1,4 +1,4 @@
-const { User, Review } = require('../models');
+const { User, Review, Game } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -25,7 +25,7 @@ const resolvers = {
             return Review.findOne({ _id });
         },
         reviewGame: async (parent, { gameTitle }) => {
-            return Review.find( {gameTitle} ).sort({ createdAt: -1 });
+            return Review.find({ gameTitle }).sort({ createdAt: -1 });
         },
         // get all users
         users: async () => {
@@ -41,6 +41,15 @@ const resolvers = {
                 .populate('follows')
                 .populate('reviews');
         },
+        //get all games
+        games: async () => {
+            return Game.find()
+        },
+        game: async (parent, { name }) => {
+            return Game.findOne({ name })
+        },
+        
+
     },
     Mutation: {
         addUser: async (parent, args) => {
@@ -106,10 +115,10 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        editReview: async (parent, { _id, title, reviewBody}, context) => {
+        editReview: async (parent, { _id, title, reviewBody }, context) => {
             if (context.user) {
                 const review = await Review.findByIdAndUpdate(
-                    {_id: _id},
+                    { _id: _id },
                     { $set: { title: title, reviewBody: reviewBody } },
                     { new: true }
                 );
@@ -120,11 +129,15 @@ const resolvers = {
         deleteReview: async (parent, { _id }, context) => {
             if (context.user) {
                 const review = await Review.findOneAndDelete(
-                    {_id: _id}
+                    { _id: _id }
                 );
                 return review;
             }
             throw new AuthenticationError('You need to be logged in!');
+        },
+        addGame: async (parent, args) => {
+            const game = await Game.create(args);
+            return game;
         },
     }
 }

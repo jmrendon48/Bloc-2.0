@@ -18,8 +18,17 @@ const typeDefs = gql`
     gameTitle: String
     gameCoverUrl: String
     reviewBody: String
+    rating: Int
     createdAt: String
     username: String
+  }
+
+  type Game {
+    _id: ID
+    name: String
+    gameId: String
+    coverUrl: String
+    summary: String
   }
 
   type Query {
@@ -29,16 +38,19 @@ const typeDefs = gql`
     reviews(username: String): [Review]
     review(_id: ID!): Review
     reviewGame(gameTitle: String!): [Review]
+    games: [Game]
+    game(name: String!): Game
   } 
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addReview(title: String!, gameTitle: String!, gameCoverUrl: String!, reviewBody: String!): Review
+    addReview(title: String!, gameTitle: String!, gameCoverUrl: String!, reviewBody: String!, rating: Int!): Review
     addFollow(followId: ID!): User
     removeFollow(followId: ID!): User
-    editReview(_id: ID!, title: String!, reviewBody: String!): Review
+    editReview(_id: ID!, title: String!, reviewBody: String!, rating: Int!): Review
     deleteReview(_id: ID!): Review
+    addGame(name: String!,gameId: String!, coverUrl: String!, summary: String!): Game
   }
   
   type Auth {
