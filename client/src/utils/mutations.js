@@ -61,3 +61,43 @@ export const FOLLOW_USER = gql`
     }
   }
 `;
+
+export const EDIT_REVIEW = gql`
+  mutation editReview(
+    $_id: ID!
+    $title: String!
+    $reviewBody: String!
+    $rating: Int!
+  ) {
+    editReview(
+      _id: $id
+      title: $title
+      reviewBody: $reviewBody
+      rating: $rating
+    ) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody
+      rating
+      createdAt
+      username
+    }
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation deleteReview($_id: ID!) {
+    removeReview(_id: $id) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody
+      rating
+      createdAt
+      username
+    }
+  }
+`;
