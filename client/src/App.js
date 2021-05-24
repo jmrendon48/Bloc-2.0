@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import gameSearch from './pages/GameSearch';
 import GamePage from './pages/GamePage';
+import GameSearch from './pages/GameSearch';
 
 const client = new ApolloClient({
   request: operation => {
@@ -35,6 +36,7 @@ function App() {
               <Route exact path='/' component={Home}></Route>
               <Route exact path='/search' component={gameSearch}></Route>
               <Route exact path='/gamepage/:name' component={GamePage}></Route>
+              <Route exact path='/search' component={GameSearch}></Route>
               <Route exact path='/profile/:username?' component={Profile}></Route>
             </Switch>
           </>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
 
-const SearchBooks = () => {
+const GameSearch = () => {
   const [games, setGames] = useState([]);
   
   const [searchInput, setSearchInput] = useState("");
@@ -110,4 +110,4 @@ const SearchBooks = () => {
 };
 //remember the picture api (james will do it)
 //when clicking on picture link to game page
-export default SearchBooks;
+export default GameSearch;
