@@ -1,6 +1,7 @@
-require('dotenv').config()
-const client = process.env.twitch_client_id
-const auth = process.env.twitch_auth
+import env from "react-dotenv";
+
+const client = env.twitch_client_id
+const auth = env.twitch_auth
 
 export const searchGame = (query) => {
     console.log("from API", client, auth)
@@ -11,10 +12,10 @@ export const searchGame = (query) => {
         method: "POST",
         headers: {
             "Content-Type": 'application/json',
-            // "Client-ID": client,
-            // "Authorization": auth,
-            "Client-ID": 'w6k0p7kqfipr0j3xuj55q2z85vrs57',
-            "Authorization": 'Bearer 1cv3ma8y8rj7im3gm6sb8izgzsycox',
+            "Client-ID": client,
+            "Authorization": auth,
+            // "Client-ID": 'w6k0p7kqfipr0j3xuj55q2z85vrs57',
+            // "Authorization": 'Bearer 1cv3ma8y8rj7im3gm6sb8izgzsycox',
         },
         body: dataSearch
     })
