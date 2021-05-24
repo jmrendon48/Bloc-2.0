@@ -21,6 +21,9 @@ const reviewSchema = new Schema(
       minlength: 1,
       maxlength: 1000
     },
+    rating: {
+      type: Number,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
