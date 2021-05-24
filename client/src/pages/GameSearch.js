@@ -14,7 +14,7 @@ const makeUrl = (coverId) => {
 } 
 
 
-const SearchBooks = () => {
+const GameSearch = () => {
   const [games, setGames] = useState([]);
   
   const [searchInput, setSearchInput] = useState("");
@@ -126,4 +126,4 @@ const SearchBooks = () => {
 };
 //remember the picture api (james will do it)
 //when clicking on picture link to game page
-export default SearchBooks;
+export default GameSearch;
