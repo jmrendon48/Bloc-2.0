@@ -27,7 +27,7 @@ const GamePage = (props) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   const { loading, data } = useQuery(QUERY_REVIEWGAME, {
-    variables: { gameTitle: gameTitle },
+    variables: { gameTitle: name },
   });
 
   const reload=()=>window.location.reload();
@@ -43,7 +43,7 @@ const GamePage = (props) => {
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
-            {gameTitle} ({first_release_date})
+            {name} ({first_release_date})
           </Card.Title>
           <Card.Img
             src={coverUrl}
@@ -74,8 +74,8 @@ const GamePage = (props) => {
         <Modal.Body>
           <ReviewForm
             handleModalClose={() => setShowReviewModal(false)}
-            gameTitle={gameTitle}
-            gameCoverUrl={gameCoverUrl}
+            gameTitle={name}
+            gameCoverUrl={coverUrl}
             setShowReviewModal={setShowReviewModal}
           />
         </Modal.Body>
