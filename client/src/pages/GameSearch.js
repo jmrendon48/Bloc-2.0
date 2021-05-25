@@ -4,7 +4,7 @@ import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
 import { GAME_SAVED } from "../utils/mutations"
 import { QUERY_GAME } from "../utils/queries"
-import {  useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 // import env from "react-dotenv";
 // const client = env.twitch_client_id
 // const auth = env.twitch_auth
@@ -14,17 +14,16 @@ const GameSearch = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const [addGame] = useMutation(GAME_SAVED)
-  const [formState, setFormState] = useState({ name: '', gameId: '', coverUrl:'', summary:'' })
+  const [formState, setFormState] = useState({ name: '', gameId: '', coverUrl: '', summary: '' })
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     if (!searchInput) {
       return false;
     }
-
     try {
-      const response = await searchGame(searchInput);
+      // const response = await searchGame(searchInput);
+      const response = await fetch(`/test/${searchInput}`)
 
       if (!response.ok) {
         throw new Error("something went wrong!");
@@ -41,41 +40,25 @@ const GameSearch = () => {
       }));
 
       for (let i = 0; i < items.length; i++) {
-        const dataSearch = `fields *; where id = ${items[i].cover};`;
-        const responce = await fetch(`https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/covers`, {
-          method: "POST",
-          headers: {
-            "Content-Type": 'application/json',
-            // "Client-ID": client,
-            // "Authorization": auth,
-            "Client-ID": 'w6k0p7kqfipr0j3xuj55q2z85vrs57',
-            "Authorization": 'Bearer 1cv3ma8y8rj7im3gm6sb8izgzsycox',
-          },
-          body: dataSearch
+        const response = await fetch(`/rest/${items[i].cover}`)
+          .then(function (data) { return data.json() })
+          .then(response => {
+            const hash = response[0].image_id;
+            const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
+            gameData[i].coverUrl = `${link}`
 
-        }).then(function (data1) {
-          return data1.json()
-        }).then(response => {
-          const hash = response[0].image_id;
-          const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
-          gameData[i].coverUrl = `${link}`
-      
-          setFormState({
-            name:gameData[i].name,
-            id:gameData[i].id,
-            coverUrl:gameData[i].coverUrl,
-            summary:gameData[i].summary,
+            setFormState({
+              name: gameData[i].name,
+              id: gameData[i].id,
+              coverUrl: gameData[i].coverUrl,
+              summary: gameData[i].summary,
+            })
+            return link
           })
-          
-          
-          return link
-         
-        }).catch(err => {
-          console.error(err);
-        })
+          .catch(err => {
+            console.error(err);
+          })
       }
-
-
       setGames(gameData);
       setSearchInput("");
     } catch (err) {
@@ -83,7 +66,7 @@ const GameSearch = () => {
     }
   };
 
-  const doFunction =  (event =>{
+  const doFunction = (event => {
     handleFormSubmit(event)
     handleSave(event)
   })
@@ -91,13 +74,13 @@ const GameSearch = () => {
   const handleSave = async () => {
     try {
       await addGame({
-        variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary:formState.summary}
+        variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary: formState.summary }
       });
     } catch (e) {
       console.error(e);
     }
   };
-  
+
 
   return (
     <>
@@ -116,7 +99,6 @@ const GameSearch = () => {
                   placeholder="Search for a Game"
                 />
               </Col>
-
               <Button type="submit" variant="success" size="lg">
                 Submit Search
               </Button>
@@ -124,7 +106,6 @@ const GameSearch = () => {
           </Form>
         </Container>
       </Jumbotron>
-
       <Container className="col-3">
         <h2>
           {games.length
