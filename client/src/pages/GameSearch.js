@@ -15,16 +15,7 @@ const GameSearch = () => {
 
   const [addGame] = useMutation(GAME_SAVED)
   const [formState, setFormState] = useState({ name: '', gameId: '', coverUrl:'', summary:'' })
-  // const [name,setName] =useState("");
-  // const [gameId,setGameId] =useState("");
-  // const [coverUrl,setCoverUrl] =useState("");
-  // const [summary,setSummary] =useState("");
-  // function reset(){
-  //     setName("");
-  //     setGameId("");
-  //     setCoverUrl("");
-  //     setSummary("");
-  //   }
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -40,7 +31,7 @@ const GameSearch = () => {
       }
       const items = await response.json();
       //map data from first api search
-      const gameData = items.map((game, index) => ({
+      const gameData = items.map((game) => ({
         id: game.id,
         name: game.name,
         cover: game.cover,
@@ -68,19 +59,14 @@ const GameSearch = () => {
           const hash = response[0].image_id;
           const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
           gameData[i].coverUrl = `${link}`
-          // setName(gameData[i].name);
-          // setGameId(gameData[i].id);
-          // setCoverUrl(gameData[i].coverUrl);
-          // setSummary(gameData[i].summary);
+      
           setFormState({
             name:gameData[i].name,
             id:gameData[i].id,
             coverUrl:gameData[i].coverUrl,
             summary:gameData[i].summary,
           })
-          // addGame({
-          //   variables: { name, gameId, coverUrl, summary }
-          // })
+          
           
           return link
          
@@ -96,18 +82,22 @@ const GameSearch = () => {
       console.error(err);
     }
   };
+
   const doFunction =  (event =>{
     handleFormSubmit(event)
-    doMutation(event)
+    handleSave(event)
   })
-  function doMutation(event){
-  try{
-        const mutations =  addGame({ variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary:formState.summary }})
-    } catch (e){
-      console.error(e)
+
+  const handleSave = async () => {
+    try {
+      await addGame({
+        variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary:formState.summary}
+      });
+    } catch (e) {
+      console.error(e);
     }
-  }
-    
+  };
+  
 
   return (
     <>
