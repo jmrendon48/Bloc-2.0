@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/react-hooks";
-import { GAME_SAVED } from "../utils/mutations"
-import { QUERY_REVIEWGAME } from "../utils/queries";
+import { QUERY_REVIEWGAME, QUERY_GAME } from "../utils/queries";
 import {
   // Jumbotron,
   Modal,

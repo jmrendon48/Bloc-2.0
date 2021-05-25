@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
-import { searchGame } from "../utils/API";
 import { GAME_SAVED } from "../utils/mutations"
 import { QUERY_GAME } from "../utils/queries"
 import { useMutation } from "@apollo/client";
-// import env from "react-dotenv";
-// const client = env.twitch_client_id
-// const auth = env.twitch_auth
 
 const GameSearch = () => {
   const [games, setGames] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   const [addGame] = useMutation(GAME_SAVED)
-  const [formState, setFormState] = useState({ name: '', gameId: '', coverUrl: '', summary: '' })
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -22,14 +18,14 @@ const GameSearch = () => {
       return false;
     }
     try {
-      // const response = await searchGame(searchInput);
+
       const response = await fetch(`/test/${searchInput}`)
 
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
       const items = await response.json();
-      //map data from first api search
+
       const gameData = items.map((game) => ({
         id: game.id,
         name: game.name,
@@ -47,12 +43,12 @@ const GameSearch = () => {
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
 
-            setFormState({
-              name: gameData[i].name,
-              id: gameData[i].id,
-              coverUrl: gameData[i].coverUrl,
-              summary: gameData[i].summary,
-            })
+            console.log("1st-----------",gameData[i].name,gameData[i].id,gameData[i].coverUrl,gameData[i].summary)
+            
+            addGame({
+              variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
+            });
+
             return link
           })
           .catch(err => {
@@ -68,19 +64,7 @@ const GameSearch = () => {
 
   const doFunction = (event => {
     handleFormSubmit(event)
-    handleSave(event)
   })
-
-  const handleSave = async () => {
-    try {
-      await addGame({
-        variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary: formState.summary }
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
 
   return (
     <>
@@ -117,7 +101,7 @@ const GameSearch = () => {
             return (
               <Link
                 to={{
-                  pathname: `/gamepage/${game.name}`,
+                  pathname: `/gamepage/${game.id}`,
                   state: {
                     name: `${game.name}`,
                     gameId: `${game.id}`,
@@ -147,6 +131,5 @@ const GameSearch = () => {
     </>
   );
 };
-//remember the picture api (james will do it)
-//when clicking on picture link to game page
+
 export default GameSearch;
