@@ -1,32 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
-import { searchGame, getGameCover } from "../utils/API";
-
-// const makeUrl = (coverId) => {
-//     try {
-//       const response = getGameCover(coverId);
-
-//       if (!response.ok) {
-//         throw new Error("something went wrong!");
-//       }
-
-//       const items = response.json();
-//       console.log("--------------------hello------------------",items);
-//       const imageId = items[0].imageId
-//       const setUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${imageId}.jpg`
-//       return setUrl
-
-//     } catch (err) {
-//       console.error(err);
-//     }
-// }
+import { searchGame } from "../utils/API";
+import env from "react-dotenv";
+const client = env.twitch_client_id
+const auth = env.twitch_auth
 
 const GameSearch = () => {
   const [games, setGames] = useState([]);
-
+  const [url, setUrl] = useState([])
   const [searchInput, setSearchInput] = useState("");
-
+  const coverUrlArr = ['test'];
+  const testArrw = ['1', '1', '2', '3', 'https://images.igdb.com/igdb/image/upload/t_1080p/co1rco.jpg']
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -40,22 +25,48 @@ const GameSearch = () => {
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
-
       const items = await response.json();
-
-      console.log(items);
-
-      const gameData = items.map((game) => ({
+      //map data from first api search
+      const gameData = items.map((game, index) => ({
         id: game.id,
         name: game.name,
         cover: game.cover,
+        coverUrl: null,
         first_release_date: game.first_release_date,
         summary: game.summary,
       }));
-      console.log(gameData[0].cover);
-      // for(let i=0;  i<gameData.length; i++) {
-      //   makeUrl(gameData[i].cover)
-      // }
+      // console.log("------handleForm------", items, items[0].cover, items.length);
+      for (let i = 0; i < items.length; i++) {
+        // getGameCover(items[i].cover)
+        const dataSearch = `fields *; where id = ${items[i].cover};`;
+        const responce = await fetch(`https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/covers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": 'application/json',
+            "Client-ID": client,
+            "Authorization": auth,
+          },
+          body: dataSearch
+          //to use this must grab image_id from data object then input it into `https://images.igdb.com/igdb/image/upload/t_1080p/${image_id}.jpg` to get image
+        }).then(function (data1) {
+          return data1.json()
+        }).then(response => {
+          // console.log("4-----------------", response)
+          const hash = response[0].image_id;
+          const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
+          // console.log("grom API ------------", link)
+          coverUrlArr.push(`${link}`)
+          // console.log(coverUrlArr, "in nested fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+          gameData[i].coverUrl= `${link}`
+          return link
+        }).catch(err => {
+          console.error(err);
+        })
+      }
+      
+      // console.log("check ------------------", coverUrlArr[0], items )
+      // console.log(gameData.coverUrl);
+
       setGames(gameData);
       setSearchInput("");
     } catch (err) {
@@ -63,12 +74,16 @@ const GameSearch = () => {
     }
   };
 
+  const doFunction = (event) => {
+    handleFormSubmit(event);
+  }
+
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
           <h1>Search for a Game</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <Form onSubmit={doFunction}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
@@ -103,7 +118,8 @@ const GameSearch = () => {
                   pathname: `/gamepage/${game.name}`,
                   state: {
                     name: `${game.name}`,
-                    coverId: `${game.cover}`,
+                    gameId: `${game.id}`,
+                    coverUrl: `${game.coverUrl}`,
                     summary: `${game.summary}`,
                     first_release_date: `${game.first_release_date}`,
                   },
@@ -115,7 +131,7 @@ const GameSearch = () => {
                   {game.cover ? (
                     <Card.Img
                       src={game.coverUrl}
-                      alt={`The cover for ${game.name}`}
+                      alt={`The cover for ${game.name}, url: ${game.coverUrl}`}
                       variant="top"
                     />
                   ) : null}

@@ -17,16 +17,17 @@ import ReviewForm from "../components/ReviewForm/index";
 import ReviewList from "../components/ReviewList/index";
 
 const GamePage = (props) => {
-  // const { name, coverId } = props.location.state
-  const gameCoverUrl = props.location.state.coverId;
-  const gameTitle = props.location.state.name;
+  const name = props.location.state.name
+  const gameId = props.location.state.gameId;
+  const coverUrl = props.location.state.coverUrl;
   const summary = props.location.state.summary;
   const first_release_date = props.location.state.first_release_date;
+
 
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   const { loading, data } = useQuery(QUERY_REVIEWGAME, {
-    variables: { gameTitle: gameTitle },
+    variables: { gameTitle: name },
   });
 
   const reload=()=>window.location.reload();
@@ -42,11 +43,11 @@ const GamePage = (props) => {
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
-            {gameTitle} ({first_release_date})
+            {name} ({first_release_date})
           </Card.Title>
           <Card.Img
-            src={gameCoverUrl}
-            alt={`The cover for ${gameTitle}`}
+            src={coverUrl}
+            alt={`The cover for ${name} and game id is ${gameId}`}
             variant="top"
           />
           <Card.Body>{summary}</Card.Body>
@@ -73,8 +74,8 @@ const GamePage = (props) => {
         <Modal.Body>
           <ReviewForm
             handleModalClose={() => setShowReviewModal(false)}
-            gameTitle={gameTitle}
-            gameCoverUrl={gameCoverUrl}
+            gameTitle={name}
+            gameCoverUrl={coverUrl}
             setShowReviewModal={setShowReviewModal}
           />
         </Modal.Body>
