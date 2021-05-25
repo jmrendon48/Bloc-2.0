@@ -15,6 +15,9 @@ const reviewSchema = new Schema(
     gameCoverUrl: {
       type: String,
     },
+    gameId: {
+       type:String,
+    },
     reviewBody: {
       type: String,
       required: 'You need to leave a review!',
