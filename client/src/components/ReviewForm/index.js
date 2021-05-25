@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_REVIEW } from "../../utils/mutations";
 import { QUERY_REVIEWS } from "../../utils/queries";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
   console.log(gameTitle);

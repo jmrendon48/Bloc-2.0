@@ -7,7 +7,6 @@ const ReviewList = ({ reviews }) => {
   if (!reviews.length) {
     return <h3>No Reviews Yet</h3>;
   }
-
   return (
     <div className="containter center">
       {reviews && reviews.map((review) => (
@@ -21,21 +20,25 @@ const ReviewList = ({ reviews }) => {
             <a className='review-title'>{review.title}</a>
           </h3>
 
-          {/* <div>
-            {[...Array(5)].map((star, i) => {
-                <FontAwesomeIcon className='star'
-                  icon='star'
-                  size='2x'
-                />
-            })}
-          </div> */}
-
           <div >
             <div className="row">
               <div className="col-9">
                 <h4 className='review-text'>{review.reviewBody}</h4>
               </div>
             </div>
+
+            <label>
+              <input 
+              type='radio' 
+              name='rating' 
+              value={review.rating} 
+              />
+              <FontAwesomeIcon className='star'
+                icon='star'
+                size='1x'
+                color= '#e4e5e9'
+              />
+            </label>
 
             <div className="meta row pl-3">
               <p className="username-link">
@@ -46,7 +49,7 @@ const ReviewList = ({ reviews }) => {
                 >
                   {review.username}
                 </Link>{' '}
-                {review.createdAt}
+                {review.createdAt} 
               </p>
             </div>
           </div>
