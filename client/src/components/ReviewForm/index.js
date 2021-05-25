@@ -25,6 +25,9 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
   const [reviewBody, setReviewBody] = useState("");
   const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
 
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
       setTitle(event.target.value);
@@ -45,7 +48,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
     try {
       // add thought to database
       await addReview({
-        variables: { title, gameTitle, gameCoverUrl, reviewBody },
+        variables: { title, gameTitle, gameCoverUrl, reviewBody, rating },
       });
 
       // clear form value
@@ -60,9 +63,6 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
   };
 
   const StarRating = () => {
-    const [rating, setRating] = useState(null)
-    const [hover, setHover] = useState(null)
-
     return (
       <div>
         {[...Array(5)].map((star, i) => {
@@ -90,7 +90,6 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
       </div>
     )
   }
-
 
   return (
     <div>
@@ -120,6 +119,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
         >
           Character Count: {reviewBodyCharacterCount}/1000
         </p>
+        <StarRating />
 
         {error && <span className="ml-2">Something went wrong...</span>}
         <button className="btn col-12 col-md-3" type="submit">
@@ -127,7 +127,7 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal }) => {
         </button>
       </form>
 
-      <StarRating />
+      
 
     </div>
   );

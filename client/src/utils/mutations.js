@@ -30,18 +30,21 @@ export const ADD_REVIEW = gql`
     $gameTitle: String!
     $gameCoverUrl: String!
     $reviewBody: String!
+    $rating: Int!
   ) {
     addReview(
       title: $title
       gameTitle: $gameTitle
       gameCoverUrl: $gameCoverUrl
       reviewBody: $reviewBody
+      rating: $rating
     ) {
       _id
       title
       gameTitle
       gameCoverUrl
       reviewBody
+      rating
       createdAt
       username
     }

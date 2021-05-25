@@ -43,7 +43,7 @@ const GamePage = (props) => {
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
-            {name} ({first_release_date})
+            {name}
           </Card.Title>
           <Card.Img
             src={coverUrl}
