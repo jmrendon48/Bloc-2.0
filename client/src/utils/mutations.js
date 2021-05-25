@@ -73,7 +73,7 @@ export const EDIT_REVIEW = gql`
     $rating: Int!
   ) {
     editReview(
-      _id: $id
+      _id: $_id
       title: $title
       reviewBody: $reviewBody
       rating: $rating

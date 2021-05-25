@@ -95,6 +95,7 @@ const ReviewList = ({ reviews }) => {
                     setShowEditModal={setShowEditModal}
                     reviewTitle = {review.title}
                     reviewBody = {review.reviewBody}
+                    _id = {review._id}
                   />
                 </Modal.Body>
               </Modal>

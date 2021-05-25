@@ -13,14 +13,14 @@ import {
 import { EDIT_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Edit = ({ reviewTitle, reviewBody }) => {
+const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
   const [editReview] = useMutation(EDIT_REVIEW);
 
   const [title, setTitle] = useState("");
   const [titleCharacterCount, setTitleCharacterCount] = useState(0);
 
   const [editBody, setEditBody] = useState("");
-  const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
+  const [editBodyCharacterCount, SetEditBodyCharacterCount] = useState(0);
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
@@ -32,32 +32,32 @@ const Edit = ({ reviewTitle, reviewBody }) => {
     }
   };
 
-  const handleReviewBodyChange = (event) => {
+  const handleEditBodyChange = (event) => {
     if (event.target.value.length <= 1000) {
       setEditBody(event.target.value);
-      SetReviewBodyCharacterCount(event.target.value.length);
+      SetEditBodyCharacterCount(event.target.value.length);
     }
   };
 
-  // const handleFormSubmit = async (event) => {
-  //   event.preventDefault();
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-  //   try {
-  //     // add thought to database
-  //     await editReview({
-  //       variables: { title, gameTitle, gameCoverUrl, reviewBody, rating },
-  //     });
+    try {
+      // add thought to database
+      await editReview({
+        variables: { _id, title, reviewBody, rating },
+      });
 
-  //     // clear form value
-  //     setTitle("");
-  //     setTitleCharacterCount(0);
-  //     setReviewBody("");
-  //     SetReviewBodyCharacterCount(0);
-  //     setShowEditModal(false);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
+      // clear form value
+      setTitle("");
+      setTitleCharacterCount(0);
+      setEditBody("");
+      SetEditBodyCharacterCount(0);
+      setShowEditModal(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const StarRating = () => {
     return (
@@ -92,7 +92,7 @@ const Edit = ({ reviewTitle, reviewBody }) => {
     <div>
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
-        // onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit}
       >
         <textarea
           placeholder={reviewTitle}
@@ -108,13 +108,13 @@ const Edit = ({ reviewTitle, reviewBody }) => {
           placeholder={reviewBody}
           value={editBody}
           className="form-input col-12 col-md-9"
-          onChange={handleReviewBodyChange}
+          onChange={handleEditBodyChange}
         ></textarea>
         <p
-          className={`m-0 ${reviewBodyCharacterCount === 1000 ? "text-error" : ""
+          className={`m-0 ${editBodyCharacterCount === 1000 ? "text-error" : ""
             }`}
         >
-          Character Count: {reviewBodyCharacterCount}/1000
+          Character Count: {editBodyCharacterCount}/1000
         </p>
         <StarRating />
 
