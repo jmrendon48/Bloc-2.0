@@ -4,10 +4,10 @@ const gameSchema = new Schema(
   {
     name: {
       type: String,
-      unique: true,
     },
     gameId: {
       type: String,
+      unique: true,
     },
     coverUrl: {
       type: String,
