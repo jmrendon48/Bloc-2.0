@@ -118,6 +118,7 @@ const GameSearch = () => {
                   pathname: `/gamepage/${game.name}`,
                   state: {
                     name: `${game.name}`,
+                    gameId: `${game.id}`,
                     coverUrl: `${game.coverUrl}`,
                     summary: `${game.summary}`,
                     first_release_date: `${game.first_release_date}`,

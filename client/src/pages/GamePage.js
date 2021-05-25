@@ -17,11 +17,12 @@ import ReviewForm from "../components/ReviewForm/index";
 import ReviewList from "../components/ReviewList/index";
 
 const GamePage = (props) => {
-  // const { name, coverId } = props.location.state
-  const gameCoverUrl = props.location.state.coverId;
-  const gameTitle = props.location.state.name;
+  const name = props.location.state.name
+  const gameId = props.location.state.gameId;
+  const coverUrl = props.location.state.coverUrl;
   const summary = props.location.state.summary;
   const first_release_date = props.location.state.first_release_date;
+
 
   const [showReviewModal, setShowReviewModal] = useState(false);
 
@@ -45,8 +46,8 @@ const GamePage = (props) => {
             {gameTitle} ({first_release_date})
           </Card.Title>
           <Card.Img
-            src={gameCoverUrl}
-            alt={`The cover for ${gameTitle}`}
+            src={coverUrl}
+            alt={`The cover for ${name} and game id is ${gameId}`}
             variant="top"
           />
           <Card.Body>{summary}</Card.Body>
