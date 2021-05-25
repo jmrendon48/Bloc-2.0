@@ -17,6 +17,7 @@ const typeDefs = gql`
     title: String
     gameTitle: String
     gameCoverUrl: String
+    gameId: String
     reviewBody: String
     rating: Int
     createdAt: String
@@ -45,7 +46,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addReview(title: String!, gameTitle: String!, gameCoverUrl: String!, reviewBody: String!, rating: Int!): Review
+    addReview(title: String!, gameTitle: String!, gameCoverUrl: String!, gameId: String!, reviewBody: String!, rating: Int!): Review
     addFollow(followId: ID!): User
     removeFollow(followId: ID!): User
     editReview(_id: ID!, title: String!, reviewBody: String!, rating: Int!): Review
