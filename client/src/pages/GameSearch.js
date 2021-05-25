@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
-
-import { useMutation } from "@apollo/client";
+import { GAME_SAVED } from "../utils/mutations"
+import { QUERY_GAME } from "../utils/queries"
+import {  useMutation } from "@apollo/client";
 // import env from "react-dotenv";
 // const client = env.twitch_client_id
 // const auth = env.twitch_auth
@@ -11,13 +12,19 @@ import { useMutation } from "@apollo/client";
 const GameSearch = () => {
   const [games, setGames] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const coverUrlArr = ['test'];
 
   const [addGame] = useMutation(GAME_SAVED)
-  const [name,setName] =useState("");
-  const [gameId,setGameId] =useState("");
-  const [coverUrl,setCoverUrl] =useState("");
-  const [summary,setSummary] =useState("");
+  const [formState, setFormState] = useState({ name: '', gameId: '', coverUrl:'', summary:'' })
+  // const [name,setName] =useState("");
+  // const [gameId,setGameId] =useState("");
+  // const [coverUrl,setCoverUrl] =useState("");
+  // const [summary,setSummary] =useState("");
+  // function reset(){
+  //     setName("");
+  //     setGameId("");
+  //     setCoverUrl("");
+  //     setSummary("");
+  //   }
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -60,17 +67,20 @@ const GameSearch = () => {
         }).then(response => {
           const hash = response[0].image_id;
           const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
-          coverUrlArr.push(`${link}`)
           gameData[i].coverUrl = `${link}`
-          setName(gameData[i].name);
-          setGameId(gameData[i].gameId);
-          setCoverUrl(gameData[i].coverUrl);
-          setSummary(gameData[i].summary);
-          
-          addGame({
-            variables: { name, gameId, coverUrl, summary }
+          // setName(gameData[i].name);
+          // setGameId(gameData[i].id);
+          // setCoverUrl(gameData[i].coverUrl);
+          // setSummary(gameData[i].summary);
+          setFormState({
+            name:gameData[i].name,
+            id:gameData[i].id,
+            coverUrl:gameData[i].coverUrl,
+            summary:gameData[i].summary,
           })
-
+          // addGame({
+          //   variables: { name, gameId, coverUrl, summary }
+          // })
           
           return link
          
@@ -86,14 +96,25 @@ const GameSearch = () => {
       console.error(err);
     }
   };
-
+  const doFunction =  (event =>{
+    handleFormSubmit(event)
+    doMutation(event)
+  })
+  function doMutation(event){
+  try{
+        const mutations =  addGame({ variables: { name: formState.name, gameId: formState.gameId, coverUrl: formState.coverUrl, summary:formState.summary }})
+    } catch (e){
+      console.error(e)
+    }
+  }
+    
 
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
           <h1>Search for a Game</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <Form onSubmit={doFunction}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
