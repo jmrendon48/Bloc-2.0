@@ -2,25 +2,26 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { searchGame } from "../utils/API";
-// import env from "react-dotenv";
-// const client = env.twitch_client_id
-// const auth = env.twitch_auth
+import { GAME_SAVED } from "../utils/mutations"
+import { useMutation } from "@apollo/client";
 
 const GameSearch = () => {
   const [games, setGames] = useState([]);
-  const [url, setUrl] = useState([])
   const [searchInput, setSearchInput] = useState("");
-  const coverUrlArr = ['test'];
-  const testArrw = ['1', '1', '2', '3', 'https://images.igdb.com/igdb/image/upload/t_1080p/co1rco.jpg']
+  const [addGame] = useMutation(GAME_SAVED)
+  const [name, setName] = useState("");
+  const [gameId, setGameId] = useState("");
+  const [coverUrl, setCoverUrl] = useState("");
+  const [summary, setSummary] = useState("");
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     if (!searchInput) {
       return false;
     }
-
     try {
-      const response = await searchGame(searchInput);
+      // const response = await searchGame(searchInput);
+      const response = await fetch(`/test/${searchInput}`)
 
       if (!response.ok) {
         throw new Error("something went wrong!");
@@ -35,55 +36,39 @@ const GameSearch = () => {
         first_release_date: game.first_release_date,
         summary: game.summary,
       }));
-      // console.log("------handleForm------", items, items[0].cover, items.length);
-      for (let i = 0; i < items.length; i++) {
-        // getGameCover(items[i].cover)
-        const dataSearch = `fields *; where id = ${items[i].cover};`;
-        const responce = await fetch(`https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/covers`, {
-          method: "POST",
-          headers: {
-            "Content-Type": 'application/json',
-            "Client-ID": 'w6k0p7kqfipr0j3xuj55q2z85vrs57',
-            "Authorization": 'Bearer 1cv3ma8y8rj7im3gm6sb8izgzsycox',
-          },
-          body: dataSearch
-          //to use this must grab image_id from data object then input it into `https://images.igdb.com/igdb/image/upload/t_1080p/${image_id}.jpg` to get image
-        }).then(function (data1) {
-          return data1.json()
-        }).then(response => {
-          // console.log("4-----------------", response)
-          const hash = response[0].image_id;
-          const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
-          // console.log("grom API ------------", link)
-          coverUrlArr.push(`${link}`)
-          // console.log(coverUrlArr, "in nested fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-          gameData[i].coverUrl= `${link}`
-          return link
-        }).catch(err => {
-          console.error(err);
-        })
-      }
-      
-      // console.log("check ------------------", coverUrlArr[0], items )
-      // console.log(gameData.coverUrl);
 
+      for (let i = 0; i < items.length; i++) {
+        const response = await fetch(`/rest/${items[i].cover}`)
+          .then(function (data) { return data.json() })
+          .then(response => {
+            const hash = response[0].image_id;
+            const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
+            gameData[i].coverUrl = `${link}`
+            setName(gameData[i].name);
+            setGameId(gameData[i].gameId);
+            setCoverUrl(gameData[i].coverUrl);
+            setSummary(gameData[i].summary);
+            // addGame({
+            //   variables: { name, gameId, coverUrl, summary }
+            // })
+            return link
+          })
+          .catch(err => {
+            console.error(err);
+          })
+      }
       setGames(gameData);
       setSearchInput("");
     } catch (err) {
       console.error(err);
     }
   };
-
-  const doFunction = (event) => {
-    handleFormSubmit(event);
-  }
-
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
           <h1>Search for a Game</h1>
-          <Form onSubmit={doFunction}>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
@@ -95,7 +80,6 @@ const GameSearch = () => {
                   placeholder="Search for a Game"
                 />
               </Col>
-
               <Button type="submit" variant="success" size="lg">
                 Submit Search
               </Button>
@@ -103,12 +87,11 @@ const GameSearch = () => {
           </Form>
         </Container>
       </Jumbotron>
-
       <Container className="col-3">
         <h2>
           {games.length
             ? `Viewing ${games.length} results:`
-            : "Search for a book to begin"}
+            : "No Results"}
         </h2>
         <Card style={{ width: "18rem" }}>
           {games.map((game) => {

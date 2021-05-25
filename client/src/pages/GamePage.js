@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/react-hooks";
+import { GAME_SAVED } from "../utils/mutations"
 import { QUERY_REVIEWGAME } from "../utils/queries";
 import {
-  Jumbotron,
+  // Jumbotron,
   Modal,
-  Tab,
+  // Tab,
   Container,
-  Col,
-  Form,
-  Button,
+  // Col,
+  // Form,
+  // Button,
   Card,
 } from "react-bootstrap";
 import ReviewForm from "../components/ReviewForm/index";

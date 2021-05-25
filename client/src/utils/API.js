@@ -1,4 +1,4 @@
-import env from "react-dotenv";
+// import env from "react-dotenv";
 
 // const client = env.twitch_client_id
 // const auth = env.twitch_auth
