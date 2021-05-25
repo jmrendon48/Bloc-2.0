@@ -53,6 +53,9 @@
   },
   "devDependencies": {},
   "react-dotenv": {
-    "whitelist": ["twitch_client_id", "twitch_auth"]
+    "whitelist": [
+      "twitch_client_id",
+      "twitch_auth"
+    ]
   }
 }

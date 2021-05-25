@@ -61,3 +61,25 @@ export const FOLLOW_USER = gql`
     }
   }
 `;
+
+export const GAME_SAVED = gql`
+  mutation addGame(
+    $name: String!,
+    $gameId: String!,
+    $coverUrl: String!,
+    $summary: String!
+  ){
+  addGame(
+    name: $name,
+    gameId: $gameId,
+    coverUrl: $coverUrl,
+    summary: $summary
+  ){
+    _id
+    name
+    gameId
+    coverUrl
+    summary
+  }
+}
+`;

@@ -71,3 +71,14 @@ export const QUERY_REVIEWGAME = gql`
     }
   }
 `;
+
+export const QUERY_GAME = gql`
+  query game($name: String!){
+    game(name: $name){
+      _id
+      name
+      gameId
+      coverUrl
+      summary
+    }
+  }`
