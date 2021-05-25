@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_REVIEWGAME } from "../utils/queries";
 import {
@@ -23,7 +22,6 @@ const GamePage = (props) => {
   const summary = props.location.state.summary;
   const first_release_date = props.location.state.first_release_date;
 
-
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   const { loading, data } = useQuery(QUERY_REVIEWGAME, {
@@ -35,7 +33,6 @@ const GamePage = (props) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(data);
   const reviews = data?.reviewGame || {};
 
   return (
@@ -43,7 +40,7 @@ const GamePage = (props) => {
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
-            {name}
+            {name} ({first_release_date})
           </Card.Title>
           <Card.Img
             src={coverUrl}
@@ -64,10 +61,8 @@ const GamePage = (props) => {
         size="lg"
         show={showReviewModal}
         onHide={() => setShowReviewModal(false)}
-        aria-labelledby="signup-modal"
         onExit={reload}
       >
-        {/* tab container to do either signup or login component */}
         <Modal.Header closeButton>
           <Modal.Title id="signup-modal">Add Review</Modal.Title>
         </Modal.Header>
