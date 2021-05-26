@@ -92,7 +92,7 @@ export const EDIT_REVIEW = gql`
 
 export const DELETE_REVIEW = gql`
   mutation deleteReview($_id: ID!) {
-    removeReview(_id: $id) {
+    deleteReview(_id: $_id) {
       _id
       title
       gameTitle

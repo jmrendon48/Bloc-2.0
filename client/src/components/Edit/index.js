@@ -10,11 +10,12 @@ import {
   Button,
   Card,
 } from "react-bootstrap";
-import { EDIT_REVIEW } from "../../utils/mutations";
+import { EDIT_REVIEW, DELETE_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
-  const [editReview] = useMutation(EDIT_REVIEW);
+  const [ editReview ] = useMutation(EDIT_REVIEW);
+  const [ deleteReview ] = useMutation(DELETE_REVIEW);
 
   const [title, setTitle] = useState("");
   const [titleCharacterCount, setTitleCharacterCount] = useState(0);
@@ -44,7 +45,6 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
     reviewBody = editBody;
 
     try {
-      // add thought to database
       await editReview({
         variables: { _id, title, reviewBody, rating },
       });
@@ -59,6 +59,18 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
       console.error(e);
     }
   };
+
+  const handleDelete = async ( _id ) => {
+    console.log(_id)
+    try {
+      await deleteReview({
+        variables: { _id },
+      });
+      setShowEditModal(false);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const StarRating = () => {
     return (
@@ -124,6 +136,9 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
           Submit
         </button>
       </form>
+      <button className="btn col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
+          Delete Review
+        </button>
     </div>
   );
 }
