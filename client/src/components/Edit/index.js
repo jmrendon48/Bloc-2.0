@@ -1,33 +1,23 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { ADD_REVIEW } from "../../utils/mutations";
-import { QUERY_REVIEWS } from "../../utils/queries";
+import { EDIT_REVIEW, DELETE_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ReviewForm = (props) => {
-  const { gameTitle, gameId,  gameCoverUrl, setShowReviewModal  } = props
-  console.log(gameTitle);
-  const [addReview, { error }] = useMutation(ADD_REVIEW, {
-    update(cache, { data: { addReview } }) {
-      // read what's currently in the cache
-      const { reviews } = cache.readQuery({ query: QUERY_REVIEWS });
-
-      // prepend the newest thought to the front of the array
-      cache.writeQuery({
-        query: QUERY_REVIEWS,
-        data: { reviews: [addReview, ...reviews] },
-      });
-    },
-  });
+const Edit = (props) => {
+  const { _id, reviewTitle, reviewBody, setShowEditModal } =props
+  const [ editReview ] = useMutation(EDIT_REVIEW);
+  const [ deleteReview ] = useMutation(DELETE_REVIEW);
 
   const [title, setTitle] = useState("");
   const [titleCharacterCount, setTitleCharacterCount] = useState(0);
 
-  const [reviewBody, setReviewBody] = useState("");
-  const [reviewBodyCharacterCount, SetReviewBodyCharacterCount] = useState(0);
+  const [editBody, setEditBody] = useState("");
+  const [editBodyCharacterCount, SetEditBodyCharacterCount] = useState(0);
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+
+  console.log(_id)
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
@@ -36,33 +26,44 @@ const ReviewForm = (props) => {
     }
   };
 
-  const handlereviewBodyChange = (event) => {
+  const handleEditBodyChange = (event) => {
     if (event.target.value.length <= 1000) {
-      setReviewBody(event.target.value);
-      SetReviewBodyCharacterCount(event.target.value.length);
+      setEditBody(event.target.value);
+      SetEditBodyCharacterCount(event.target.value.length);
     }
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    // reviewBody = editBody;
 
     try {
-      // add thought to database
-      await addReview({
-        variables: { title: title, gameId: gameId, gameTitle: gameTitle, gameCoverUrl: gameCoverUrl, reviewBody: reviewBody, rating: rating },
+      await editReview({
+        variables: { _id:_id, title:title, reviewBody:editBody, rating:rating },
       });
 
       // clear form value
-      
       setTitle("");
       setTitleCharacterCount(0);
-      setReviewBody("");
-      SetReviewBodyCharacterCount(0);
-      setShowReviewModal(false);
+      setEditBody("");
+      SetEditBodyCharacterCount(0);
+      setShowEditModal(false);
     } catch (e) {
       console.error(e);
     }
   };
+
+  const handleDelete = async ( _id ) => {
+    console.log(_id)
+    try {
+      await deleteReview({
+        variables: { _id },
+      });
+      setShowEditModal(false);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const StarRating = () => {
     return (
@@ -73,10 +74,10 @@ const ReviewForm = (props) => {
           return (
             <label>
               <input 
-              type='radio' 
-              name='rating' 
-              value={ratingValue} 
-              onClick={() => setRating(ratingValue)}
+                type='radio' 
+                name='rating' 
+                value={ratingValue} 
+                onClick={() => setRating(ratingValue)}
               />
               <FontAwesomeIcon className='star'
                 icon='star'
@@ -100,7 +101,7 @@ const ReviewForm = (props) => {
         onSubmit={handleFormSubmit}
       >
         <textarea
-          placeholder="Whats the title of your review?"
+          placeholder={reviewTitle}
           value={title}
           className="form-input col-12 col-md-9"
           onChange={handleTitleChange}
@@ -110,29 +111,29 @@ const ReviewForm = (props) => {
         </p>
 
         <textarea
-          placeholder="Here's a new review..."
-          value={reviewBody}
+          placeholder={reviewBody}
+          value={editBody}
           className="form-input col-12 col-md-9"
-          onChange={handlereviewBodyChange}
+          onChange={handleEditBodyChange}
         ></textarea>
         <p
-          className={`m-0 ${reviewBodyCharacterCount === 1000 ? "text-error" : ""
+          className={`m-0 ${editBodyCharacterCount === 1000 ? "text-error" : ""
             }`}
         >
-          Character Count: {reviewBodyCharacterCount}/1000
+          Character Count: {editBodyCharacterCount}/1000
         </p>
         <StarRating />
 
-        {error && <span className="ml-2">Something went wrong...</span>}
+        {/* {error && <span className="ml-2">Something went wrong...</span>} */}
         <button className="btn col-12 col-md-3" type="submit">
           Submit
         </button>
       </form>
-
-      
-
+      <button className="btn col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
+        Delete Review
+      </button>
     </div>
   );
-};
+}
 
-export default ReviewForm;
+export default Edit;
