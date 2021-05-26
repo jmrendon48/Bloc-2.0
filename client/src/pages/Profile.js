@@ -23,6 +23,7 @@ const Profile = () => {
   // redirect to personal profile page if username is the logged-in user's
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/profile/" />;
+    
   }
 
   if (loading) {
@@ -32,7 +33,8 @@ const Profile = () => {
   if (!user?.username) {
     return (
       <h4>
-        You need to be logged in to see this page. Use the navigation links above to sign up or log in!
+        You need to be logged in to see this page. Use the navigation links above to sign up or log in.
+
         <div class="jumbotron jumbotron-fluid">
           <div class="container banner">
             <h1 class="display-4 banner">
@@ -48,7 +50,7 @@ const Profile = () => {
   const handleClick = async () => {
     try {
       await followUser({
-        variables: { id: user._id }
+        variables: { followId: user._id }
       });
     } catch (e) {
       console.error(e);
@@ -60,7 +62,7 @@ const Profile = () => {
   return (
     <div>
       <div class="jumbotron jumbotron-fluid">
-        <div class="display-4 banner">
+        <div>
           <h2 class="display-4 banner">
             Viewing {userParam ? `${user.username}'s` : 'your'} Bloc profile.
         </h2>
@@ -73,7 +75,11 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="col-12 col-lg-2 mb-3 following-list rounded">
+<div>
+
+</div>
+
+      <div className="col following-list rounded">
           <FollowingList
             followCount={user.followCount}
             username={user.username}
@@ -82,7 +88,7 @@ const Profile = () => {
         </div>
 
       <div className="flex-row justify-space-between mb-3">
-        <div className="col-12 mb-3 col-lg-8">
+        <div className="col-12 mb-3">
           <ReviewList reviews={user.reviews} />
         </div>
 

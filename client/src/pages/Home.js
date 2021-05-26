@@ -22,7 +22,7 @@ const Home = () => {
                 </div>
             </div>
             <div>
-                <h5 className='small-title'>Popular Reviews For This Week</h5>
+                <h4 className='small-title'>Recent Reviews</h4>
             {loading ? (
                 <div>Loading...</div>
             ) : (
