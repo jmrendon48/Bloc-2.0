@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
 import Auth from "../../utils/auth";
@@ -25,13 +25,17 @@ const ReviewList = ({ reviews }) => {
           <div className='row bloc-box'>
 
             <div className='col-3'>
-              <img src={`${review.gameCoverUrl}`}
-                fluid
-                thumbnail
-                width={200}
-              />
               <Link to={`/gamepage/${review.gameId}`}>
-                <a className='review-title'>{review.gameTitle}</a>
+                <img src={`${review.gameCoverUrl}`}
+                  fluid
+                  thumbnail
+                  width={200}
+                />
+              </Link>
+
+
+              <Link to={`/gamepage/${review.gameId}`}>
+                <h5 className='game-title'>{review.gameTitle}</h5>
               </Link>
 
             </div>
@@ -39,15 +43,14 @@ const ReviewList = ({ reviews }) => {
             <div className='col'>
 
               <h3 className='col'>
-                <a className='review-title'>{review.title}</a>
+                <p className='review-title'>{review.title}</p>
               </h3>
 
               <div className="pl-3">
                 <p className="username-link">
                   Written by: <Link
                     to={`/profile/${review.username}`}
-                    style={{ fontWeight: 700 }}
-                  >
+                    style={{ fontWeight: 700 }}>
                     {review.username}
                   </Link>{' '} on {review.createdAt}
                 </p>
@@ -60,7 +63,7 @@ const ReviewList = ({ reviews }) => {
               </div>
 
               <div className='col-9'>
-                
+
                 {[...Array(parseInt(`${review.rating}`))].map((star, i) => {
                   const ratingValue = i + 1;
 
@@ -81,14 +84,16 @@ const ReviewList = ({ reviews }) => {
                   )
                 })}
               </div>
-              <h5 className='small-title'> {review.rating}/5 Stars </h5>
+              <p className='small-title'> {review.rating}/5 Stars </p>
 
             </div>
 
             <div>
-              <button variant='outline-light' size='sm' onClick={() => setShowEditModal(true)}>
-                <FontAwesomeIcon icon="" color="green" size="sm" /> Edit
-              </button>
+              {Auth.loggedIn() &&
+                <div>
+                  <Button variant="outline-warning" size='sm' onClick={() => setShowEditModal(true)}>
+                    <FontAwesomeIcon icon="edit" color="#FEBE10" size="lg" />Edit</Button>{' '}
+                </div>}
             </div>
 
 

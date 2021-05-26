@@ -11,6 +11,7 @@ export const QUERY_REVIEWS = gql`
       createdAt
       gameCoverUrl
       rating
+      username
     }
   }
 `;
