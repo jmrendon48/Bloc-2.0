@@ -26,12 +26,7 @@ const GamePage = () => {
       <GameInfo gameId={gameParam}></GameInfo>
       <>
         <Container className="col-8">
-          <Card border="dark">
 
-            
-            <Card.Body></Card.Body>
-
-          </Card>
         </Container>
         {loading ? <div>Loading...</div> : <ReviewList reviews={reviews} />}
       </>

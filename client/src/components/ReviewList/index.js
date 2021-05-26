@@ -94,6 +94,13 @@ const ReviewList = ({ reviews }) => {
                 </Modal.Body>
               </Modal>
             </div>
+          
+              <div>
+                <div >
+                  <h4 className='review-text'>{review.reviewBody}</h4>
+                </div>
+              </div>
+ 
           </div>
           
         ))}

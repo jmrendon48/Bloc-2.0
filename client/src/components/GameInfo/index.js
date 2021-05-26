@@ -27,8 +27,8 @@ function GameInfo(props) {
             <div className="container banner row">
                 <Image
                     src={data.game.coverUrl}
-                    width={120}
-                    height={120}
+                    width={360}
+                    height={360}
                     className="row rounded img-fluid"
                     alt={`The cover for ${data.game.name} and game id is ${data.game.gameId}`}
                 />
