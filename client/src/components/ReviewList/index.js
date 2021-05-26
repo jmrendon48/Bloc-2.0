@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { Card, Button } from 'react-bootstrap';
 
 const ReviewList = ({ reviews }) => {
 
@@ -12,49 +11,54 @@ const ReviewList = ({ reviews }) => {
   }
 
   return (
+
     <div className="containter center">
+
       {reviews && reviews.map((review) => (
-        <div key={review._id} className='row bloc-box'>
-          <div className="title row">
-            <div className='col-2'>
+
+        <div key={review._id} className='row'>
+
+          <div className='col-5'>
+
+            <div>
               <img src={`${review.gameCoverUrl}`}></img>
             </div>
+
+            {/* <Link
+                    to={{
+                      pathname: `/gamepage/${game.name}`
+                    }}
+                    style={{ fontWeight: 700 }}
+                    className="text-dark"
+                  /> */}
+            
           </div>
 
-          <h3 className="bloc-box ml-3 col">
-            <a className='review-title'>{review.title}</a>
-          </h3>
+          <div className='col'>
 
-          {/* <div>
-            {[...Array(5)].map((star, i) => {
-                <FontAwesomeIcon className='star'
-                  icon='star'
-                  size='2x'
-                />
-            })}
-          </div> */}
+            <h3>
+              <a className='review-title'>{review.title}</a>
+            </h3>
 
-          <div >
-            <div className="col">
-              <div className="col-9">
-                <h4 className='review-text'>{review.reviewBody}</h4>
-              </div>
-            </div>
-
-            <div className="meta row pl-3">
+            <div>
               <p className="username-link">
                 <Link
                   to={`/profile/${review.username}`}
                   style={{ fontWeight: 700 }}
-                  className=""
                 >
                   {review.username}
                 </Link>{' '}
                 {review.createdAt}
               </p>
             </div>
+          
+              <div>
+                <div >
+                  <h4 className='review-text'>{review.reviewBody}</h4>
+                </div>
+              </div>
+ 
           </div>
-
         </div>
       ))}
     </div>
