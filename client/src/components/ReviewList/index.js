@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
+import Auth from "../../utils/auth";
 
 const ReviewList = ({ reviews }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -70,10 +71,12 @@ const ReviewList = ({ reviews }) => {
                   {review.createdAt} 
                 </p>
               </div>
+              {Auth.loggedIn() && 
               <button onClick={() => setShowEditModal(true)}>
                 <FontAwesomeIcon icon="plus-square" color="green" size="lg" />
                 Edit your Bloc!
-              </button>
+              </button>}
+              
               <Modal
                 size="lg"
                 show={showEditModal}
