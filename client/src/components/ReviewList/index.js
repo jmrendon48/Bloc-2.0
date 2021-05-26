@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
 import Auth from "../../utils/auth";
 
-const ReviewList = ({ reviews }) => {
+const ReviewList = ({ reviews, profileReviewEdit }) => {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const reload = () => window.location.reload();
@@ -90,7 +90,7 @@ const ReviewList = ({ reviews }) => {
             </div>
 
             <div>
-              {Auth.loggedIn() &&
+              {Auth.loggedIn(), profileReviewEdit &&
                 <div>
                   <Button variant="outline-warning" size='sm' onClick={() => setShowEditModal(true)}>
                     <FontAwesomeIcon icon="edit" color="#FEBE10" size="lg" />Edit</Button>{' '}

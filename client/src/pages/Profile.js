@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
@@ -10,7 +10,7 @@ import { FOLLOW_USER } from '../utils/mutations';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
 const Profile = () => {
-
+  const [profileReviewEdit, setProfileReviewEdit] = useState(true);
   const [followUser] = useMutation(FOLLOW_USER);
 
   const { username: userParam } = useParams();
@@ -79,7 +79,7 @@ const Profile = () => {
         <div className='col-9'>
           <div className="flex-row justify-space-between mb-3">
             <div>
-              <ReviewList reviews={user.reviews} />
+              <ReviewList reviews={user.reviews} profileReviewEdit={profileReviewEdit} />
             </div>
           </div>
         </div>

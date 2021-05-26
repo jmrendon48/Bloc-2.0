@@ -13,11 +13,10 @@ const Edit = (props) => {
 
   const [editBody, setEditBody] = useState("");
   const [editBodyCharacterCount, SetEditBodyCharacterCount] = useState(0);
+  console.log(editBody);
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-
-  console.log(_id)
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
