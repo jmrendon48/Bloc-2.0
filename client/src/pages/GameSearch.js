@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Container, Form, Button, Card, Col, CardColumns } from 'react-bootstrap';
 import { GAME_SAVED } from "../utils/mutations"
 import { useMutation } from "@apollo/client";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const GameSearch = () => {
   const [games, setGames] = useState([]);
@@ -82,7 +83,9 @@ const GameSearch = () => {
                 />
               </Col>
               <Button type="submit" variant="success" size="lg">
-                Search
+                <FontAwesomeIcon
+                icon='search'
+                />
               </Button>
             </Form.Row>
           </Form>
@@ -90,11 +93,11 @@ const GameSearch = () => {
       </Jumbotron>
 
       <Container className="">
-        <h2 className="pageText">
+        <h3 className="pageText">
           {games.length
             ? `Viewing ${games.length} results:`
-            : "Write a Bloc on your favorite titles by searching them up!"}
-        </h2>
+            : "Search for Blocs on your favorite titles"}
+        </h3>
 
         <CardColumns>
           <div>
