@@ -38,7 +38,7 @@ const typeDefs = gql`
     user(username: String!): User
     reviews(username: String): [Review]
     review(_id: ID!): Review
-    reviewGame(gameTitle: String!): [Review]
+    reviewGame(gameId: String!): [Review]
     games: [Game]
     game(gameId: String!): Game
   } 

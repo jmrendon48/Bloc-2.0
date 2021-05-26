@@ -26,22 +26,25 @@ export const ADD_USER = gql`
 
 export const ADD_REVIEW = gql`
   mutation addReview(
-    $title: String!
-    $gameTitle: String!
-    $gameCoverUrl: String!
-    $reviewBody: String!
+    $title: String!,
+    $gameTitle: String!,
+    $gameId: String!,
+    $gameCoverUrl: String!,
+    $reviewBody: String!,
     $rating: Int!
   ) {
     addReview(
-      title: $title
-      gameTitle: $gameTitle
-      gameCoverUrl: $gameCoverUrl
-      reviewBody: $reviewBody
+      title: $title,
+      gameTitle: $gameTitle,
+      gameId: $gameId,
+      gameCoverUrl: $gameCoverUrl,
+      reviewBody: $reviewBody,
       rating: $rating
     ) {
       _id
       title
       gameTitle
+      gameId
       gameCoverUrl
       reviewBody
       rating

@@ -68,8 +68,8 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_REVIEWGAME = gql`
-  query reviewGame($gameTitle: String!) {
-    reviewGame(gameTitle: $gameTitle) {
+  query reviewGame($gameId: String!) {
+    reviewGame(gameId: $gameId) {
       _id
       title
       gameTitle

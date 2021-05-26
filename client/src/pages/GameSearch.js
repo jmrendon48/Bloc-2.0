@@ -42,8 +42,6 @@ const GameSearch = () => {
             const hash = response[0].image_id;
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
-
-            console.log("1st-----------",gameData[i].name,gameData[i].id,gameData[i].coverUrl,gameData[i].summary)
             
             addGame({
               variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
@@ -105,13 +103,13 @@ const GameSearch = () => {
                 <Card style={{border: '15px solid white', width: "18rem" }}>
                   <Link
                     to={{
-                      pathname: `/gamepage/${game.name}`,
+                      pathname: `/gamepage/${game.id}`,
                       state: {
                         name: `${game.name}`,
                         gameId: `${game.id}`,
                         coverUrl: `${game.coverUrl}`,
                         summary: `${game.summary}`,
-                        first_release_date: `${game.first_release_date}`,
+                        // first_release_date: `${game.first_release_date}`,
                       },
                     }}
                     style={{ fontWeight: 700 }}

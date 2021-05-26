@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import {
-  Jumbotron,
-  Modal,
-  Tab,
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-} from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
 
@@ -28,7 +19,8 @@ const ReviewList = ({ reviews }) => {
     <>
       <div className="containter center">
         {reviews && reviews.map((review) => (
-          <div key={review._id} className='row bloc-box'>
+          <div className='row bloc-box'>
+            {console.log(review._id)}
             <div className="title row">
               <div className='col-2'>
                 <img src="{`${review.gameCoverUrl}`}"></img>
@@ -94,10 +86,10 @@ const ReviewList = ({ reviews }) => {
                 <Modal.Body>
                   <Edit
                     handleModalClose={() => setShowEditModal(false)}
-                    setShowEditModal={setShowEditModal}
+                    _id = {review._id}
                     reviewTitle = {review.title}
                     reviewBody = {review.reviewBody}
-                    _id = {review._id}
+                    setShowEditModal={setShowEditModal}
                   />
                 </Modal.Body>
               </Modal>

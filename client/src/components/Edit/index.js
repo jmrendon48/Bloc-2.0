@@ -1,19 +1,10 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import {
-  Jumbotron,
-  Modal,
-  Tab,
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-} from "react-bootstrap";
 import { EDIT_REVIEW, DELETE_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
+const Edit = (props) => {
+  const { _id, reviewTitle, reviewBody, setShowEditModal } =props
   const [ editReview ] = useMutation(EDIT_REVIEW);
   const [ deleteReview ] = useMutation(DELETE_REVIEW);
 
@@ -25,6 +16,8 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+
+  console.log(_id)
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
@@ -42,11 +35,11 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    reviewBody = editBody;
+    // reviewBody = editBody;
 
     try {
       await editReview({
-        variables: { _id, title, reviewBody, rating },
+        variables: { _id:_id, title:title, reviewBody:editBody, rating:rating },
       });
 
       // clear form value
@@ -137,8 +130,8 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
         </button>
       </form>
       <button className="btn col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
-          Delete Review
-        </button>
+        Delete Review
+      </button>
     </div>
   );
 }

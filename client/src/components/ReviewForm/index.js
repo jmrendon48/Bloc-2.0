@@ -4,7 +4,8 @@ import { ADD_REVIEW } from "../../utils/mutations";
 import { QUERY_REVIEWS } from "../../utils/queries";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal, gameId }) => {
+const ReviewForm = (props) => {
+  const { gameTitle, gameId,  gameCoverUrl, setShowReviewModal  } = props
   console.log(gameTitle);
   const [addReview, { error }] = useMutation(ADD_REVIEW, {
     update(cache, { data: { addReview } }) {
@@ -48,10 +49,11 @@ const ReviewForm = ({ gameTitle, gameCoverUrl, setShowReviewModal, gameId }) => 
     try {
       // add thought to database
       await addReview({
-        variables: { title, gameId, gameTitle, gameCoverUrl, reviewBody, rating  },
+        variables: { title: title, gameId: gameId, gameTitle: gameTitle, gameCoverUrl: gameCoverUrl, reviewBody: reviewBody, rating: rating },
       });
 
       // clear form value
+      
       setTitle("");
       setTitleCharacterCount(0);
       setReviewBody("");

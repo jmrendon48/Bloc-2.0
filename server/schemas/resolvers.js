@@ -24,8 +24,8 @@ const resolvers = {
         review: async (parent, { _id }) => {
             return Review.findOne({ _id });
         },
-        reviewGame: async (parent, { gameTitle }) => {
-            return Review.find({ gameTitle }).sort({ createdAt: -1 });
+        reviewGame: async (parent, { gameId }) => {
+            return Review.find({ gameId }).sort({ createdAt: -1 });
         },
         // get all users
         users: async () => {
