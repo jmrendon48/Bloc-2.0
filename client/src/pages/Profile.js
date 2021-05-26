@@ -23,7 +23,7 @@ const Profile = () => {
   // redirect to personal profile page if username is the logged-in user's
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/profile/" />;
-    
+
   }
 
   if (loading) {
@@ -58,11 +58,11 @@ const Profile = () => {
   };
 
   console.log(user)
-  
+
   return (
     <div>
       <div class="jumbotron jumbotron-fluid">
-        <div>
+        <div class='container banner'>
           <h2 class="display-4 banner">
             Viewing {userParam ? `${user.username}'s` : 'your'} Bloc profile.
         </h2>
@@ -75,24 +75,31 @@ const Profile = () => {
         </div>
       </div>
 
-<div>
+      <div>
 
-</div>
+      </div>
 
-      <div className="col following-list rounded">
+
+      <div className='col-3'>
+        <div className="col-6 bloc-box rounded">
           <FollowingList
             followCount={user.followCount}
             username={user.username}
             follows={user.follows}
           />
         </div>
-
-      <div className="flex-row justify-space-between mb-3">
-        <div className="col-12 mb-3">
-          <ReviewList reviews={user.reviews} />
-        </div>
-
       </div>
+      
+      <div className='col'>
+        <div className="flex-row justify-space-between mb-3">
+          <div className="col-12 mb-3">
+            <ReviewList reviews={user.reviews} />
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   );
 };
