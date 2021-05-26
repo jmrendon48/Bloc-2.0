@@ -4,20 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const ReviewList = ({ reviews }) => {
+
   if (!reviews.length) {
-    return <h3>No Reviews Yet</h3>;
+    return (
+      <h1 className='pageText'>No Reviews Yet</h1>
+    )
   }
 
   return (
     <div className="containter center">
       {reviews && reviews.map((review) => (
-        <div key={review._id} className=' row bloc-box'>
+        <div key={review._id} className='row bloc-box'>
           <div className="title row">
             <div className='col-2'>
-              <img src="https://static.wikia.nocookie.net/heroe/images/c/c5/Main-qimg-eac60a09139338987351e61d3795e64f.jpeg.jpg/revision/latest/scale-to-width-down/602?cb=20210209155950"></img>
+              <img src={`${review.gameCoverUrl}`}></img>
             </div>
           </div>
-          <h3 className="bloc-box ml-3">
+
+          <h3 className="bloc-box ml-3 col">
             <a className='review-title'>{review.title}</a>
           </h3>
 
@@ -31,7 +35,7 @@ const ReviewList = ({ reviews }) => {
           </div> */}
 
           <div >
-            <div className="row">
+            <div className="col">
               <div className="col-9">
                 <h4 className='review-text'>{review.reviewBody}</h4>
               </div>

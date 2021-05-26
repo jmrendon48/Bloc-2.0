@@ -4,12 +4,13 @@ export const QUERY_REVIEWS = gql`
   query reviews($username: String) {
     reviews(username: $username) {
       _id
-      title
-      gameTitle
-      gameCoverUrl
-      reviewBody
-      createdAt
-      username
+        title
+        gameTitle
+        gameId
+        reviewBody
+        createdAt
+        gameCoverUrl
+        rating
     }
   }
 `;
@@ -23,8 +24,12 @@ export const QUERY_USER = gql`
       reviews {
         _id
         title
+        gameTitle
+        gameId
         reviewBody
         createdAt
+        gameCoverUrl
+        rating
       }
       reviewCount
       follows {
@@ -45,8 +50,12 @@ export const QUERY_ME = gql`
       reviews {
         _id
         title
+        gameTitle
+        gameId
         reviewBody
         createdAt
+        gameCoverUrl
+        rating
       }
       reviewCount
       follows {
