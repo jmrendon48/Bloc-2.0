@@ -13,11 +13,10 @@ const Edit = (props) => {
 
   const [editBody, setEditBody] = useState("");
   const [editBodyCharacterCount, SetEditBodyCharacterCount] = useState(0);
+  console.log(editBody);
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-
-  console.log(_id)
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
@@ -125,11 +124,11 @@ const Edit = (props) => {
         <StarRating />
 
         {/* {error && <span className="ml-2">Something went wrong...</span>} */}
-        <button className="btn col-12 col-md-3" type="submit">
+        <button className="btn btn-success col-12 col-md-3" type="submit">
           Submit
         </button>
       </form>
-      <button className="btn col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
+      <button className="btn btn-danger mt-1 col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
         Delete Review
       </button>
     </div>
