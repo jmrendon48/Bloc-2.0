@@ -124,11 +124,11 @@ const Edit = (props) => {
         <StarRating />
 
         {/* {error && <span className="ml-2">Something went wrong...</span>} */}
-        <button className="btn col-12 col-md-3" type="submit">
+        <button className="btn btn-success col-12 col-md-3" type="submit">
           Submit
         </button>
       </form>
-      <button className="btn col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
+      <button className="btn btn-danger mt-1 col-12 col-md-3" type="button" onClick={() => handleDelete(_id)}>
         Delete Review
       </button>
     </div>
