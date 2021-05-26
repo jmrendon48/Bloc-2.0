@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/react-hooks";
-import { QUERY_REVIEWGAME, QUERY_GAME } from "../utils/queries";
+import { QUERY_REVIEWGAME } from "../utils/queries";
+import GameInfo from "../components/GameInfo/index"
 import {
   // Jumbotron,
   Modal,
@@ -14,6 +15,7 @@ import {
 } from "react-bootstrap";
 import ReviewForm from "../components/ReviewForm/index";
 import ReviewList from "../components/ReviewList/index";
+
 
 const GamePage = (props) => {
   const name = props.location.state.name
@@ -39,6 +41,7 @@ const GamePage = (props) => {
 
   return (
     <>
+    <GameInfo></GameInfo>
       <Container className="col-8">
         <Card border="dark">
           <Card.Title>
@@ -74,6 +77,7 @@ const GamePage = (props) => {
           <ReviewForm
             handleModalClose={() => setShowReviewModal(false)}
             gameTitle={name}
+            gameId={gameId}
             gameCoverUrl={coverUrl}
             setShowReviewModal={setShowReviewModal}
           />

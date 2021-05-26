@@ -45,8 +45,8 @@ const resolvers = {
         games: async () => {
             return Game.find()
         },
-        game: async (parent, { name }) => {
-            return Game.findOne({ name })
+        game: async (parent, { gameId }) => {
+            return Game.findOne({ gameId })
         },
         
 

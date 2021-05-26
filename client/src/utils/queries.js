@@ -73,8 +73,8 @@ export const QUERY_REVIEWGAME = gql`
 `;
 
 export const QUERY_GAME = gql`
-  query game($name: String!){
-    game(name: $name){
+  query game($gameId: String!){
+    game(gameId: $gameId){
       _id
       name
       gameId

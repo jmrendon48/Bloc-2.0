@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
 import { GAME_SAVED } from "../utils/mutations"
-import { QUERY_GAME } from "../utils/queries"
 import { useMutation } from "@apollo/client";
 
 const GameSearch = () => {

@@ -40,7 +40,7 @@ const typeDefs = gql`
     review(_id: ID!): Review
     reviewGame(gameTitle: String!): [Review]
     games: [Game]
-    game(name: String!): Game
+    game(gameId: String!): Game
   } 
 
   type Mutation {
