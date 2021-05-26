@@ -2,12 +2,12 @@ const { Schema, model } = require('mongoose');
 
 const gameSchema = new Schema(
   {
-    name: {
-      type: String,
-    },
     gameId: {
       type: String,
       unique: true,
+    },
+    name: {
+      type: String,
     },
     coverUrl: {
       type: String,

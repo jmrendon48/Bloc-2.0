@@ -4,13 +4,13 @@ export const QUERY_REVIEWS = gql`
   query reviews($username: String) {
     reviews(username: $username) {
       _id
-        title
-        gameTitle
-        gameId
-        reviewBody
-        createdAt
-        gameCoverUrl
-        rating
+      title
+      gameTitle
+      gameId
+      reviewBody
+      createdAt
+      gameCoverUrl
+      rating
     }
   }
 `;
@@ -68,13 +68,14 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_REVIEWGAME = gql`
-  query reviewGame($gameTitle: String!) {
-    reviewGame(gameTitle: $gameTitle) {
+  query reviewGame($gameId: String!) {
+    reviewGame(gameId: $gameId) {
       _id
       title
       gameTitle
       gameCoverUrl
       reviewBody
+      rating
       createdAt
       username
     }
@@ -82,8 +83,8 @@ export const QUERY_REVIEWGAME = gql`
 `;
 
 export const QUERY_GAME = gql`
-  query game($name: String!){
-    game(name: $name){
+  query game($gameId: String!){
+    game(gameId: $gameId){
       _id
       name
       gameId

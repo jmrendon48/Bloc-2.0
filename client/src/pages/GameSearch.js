@@ -1,3 +1,4 @@
+  
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Form, Button, Card, Col, CardColumns } from 'react-bootstrap';
@@ -7,11 +8,9 @@ import { useMutation } from "@apollo/client";
 const GameSearch = () => {
   const [games, setGames] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+
   const [addGame] = useMutation(GAME_SAVED)
-  const [name, setName] = useState("");
-  const [gameId, setGameId] = useState("");
-  const [coverUrl, setCoverUrl] = useState("");
-  const [summary, setSummary] = useState("");
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -19,15 +18,15 @@ const GameSearch = () => {
       return false;
     }
     try {
-      // const response = await searchGame(searchInput);
+
       const response = await fetch(`/test/${searchInput}`)
 
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
       const items = await response.json();
-      //map data from first api search
-      const gameData = items.map((game, index) => ({
+
+      const gameData = items.map((game) => ({
         id: game.id,
         name: game.name,
         cover: game.cover,
@@ -43,13 +42,11 @@ const GameSearch = () => {
             const hash = response[0].image_id;
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
-            setName(gameData[i].name);
-            setGameId(gameData[i].gameId);
-            setCoverUrl(gameData[i].coverUrl);
-            setSummary(gameData[i].summary);
-            // addGame({
-            //   variables: { name, gameId, coverUrl, summary }
-            // })
+            
+            addGame({
+              variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
+            });
+
             return link
           })
           .catch(err => {
@@ -63,12 +60,16 @@ const GameSearch = () => {
     }
   };
 
+  const doFunction = (event => {
+    handleFormSubmit(event)
+  })
+
   return (
     <>
       <Jumbotron fluid className="jumbotron jumbotron-fluid">
         <Container>
           <h1 class="display-4 banner" >Search for a Game</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <Form onSubmit={doFunction}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
@@ -102,13 +103,13 @@ const GameSearch = () => {
                 <Card style={{border: '15px solid white', width: "18rem" }}>
                   <Link
                     to={{
-                      pathname: `/gamepage/${game.name}`,
+                      pathname: `/gamepage/${game.id}`,
                       state: {
                         name: `${game.name}`,
                         gameId: `${game.id}`,
                         coverUrl: `${game.coverUrl}`,
                         summary: `${game.summary}`,
-                        first_release_date: `${game.first_release_date}`,
+                        // first_release_date: `${game.first_release_date}`,
                       },
                     }}
                     style={{ fontWeight: 700 }}
@@ -134,6 +135,5 @@ const GameSearch = () => {
     </>
   );
 };
-//remember the picture api (james will do it)
-//when clicking on picture link to game page
+
 export default GameSearch;

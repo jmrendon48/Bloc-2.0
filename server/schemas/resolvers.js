@@ -24,8 +24,8 @@ const resolvers = {
         review: async (parent, { _id }) => {
             return Review.findOne({ _id });
         },
-        reviewGame: async (parent, { gameTitle }) => {
-            return Review.find({ gameTitle }).sort({ createdAt: -1 });
+        reviewGame: async (parent, { gameId }) => {
+            return Review.find({ gameId }).sort({ createdAt: -1 });
         },
         // get all users
         users: async () => {
@@ -45,8 +45,8 @@ const resolvers = {
         games: async () => {
             return Game.find()
         },
-        game: async (parent, { name }) => {
-            return Game.findOne({ name })
+        game: async (parent, { gameId }) => {
+            return Game.findOne({ gameId })
         },
         
 
@@ -115,11 +115,11 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        editReview: async (parent, { _id, title, reviewBody }, context) => {
+        editReview: async (parent, { _id, title, reviewBody, rating }, context) => {
             if (context.user) {
                 const review = await Review.findByIdAndUpdate(
                     { _id: _id },
-                    { $set: { title: title, reviewBody: reviewBody } },
+                    { $set: { title: title, reviewBody: reviewBody, rating: rating } },
                     { new: true }
                 );
                 return review;
