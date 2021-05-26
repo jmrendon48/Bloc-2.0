@@ -11,8 +11,8 @@ const FollowingList = ({ followCount, username, follows }) => {
   return (
     <div>
 
-      <h5>
-      Following {followCount} other {followCount === 1 ? 'user' : 'users'}
+      <h5 className='small-title'>
+      Following {followCount} other {followCount === 1 ? 'user' : 'users'}:
       </h5>
       
       {follows.map(follows => (

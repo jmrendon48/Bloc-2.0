@@ -124,7 +124,7 @@ const ReviewForm = (props) => {
         <StarRating />
 
         {error && <span className="ml-2">Something went wrong...</span>}
-        <button className="btn col-12 col-md-3" type="submit">
+        <button className="btn btn-success col-12 col-md-3" type="submit">
           Submit
         </button>
       </form>

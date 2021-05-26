@@ -31,6 +31,7 @@ export const QUERY_USER = gql`
         createdAt
         gameCoverUrl
         rating
+        username
       }
       reviewCount
       follows {
@@ -57,6 +58,7 @@ export const QUERY_ME = gql`
         createdAt
         gameCoverUrl
         rating
+        username
       }
       reviewCount
       follows {
