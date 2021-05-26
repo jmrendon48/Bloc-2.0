@@ -3,18 +3,44 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Container, Form, Button, Card, Col, CardColumns } from 'react-bootstrap';
 import { GAME_SAVED } from "../utils/mutations"
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery} from "@apollo/client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import {QUERY_GAMES} from "../utils/queries"
 const GameSearch = () => {
   const [games, setGames] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-
+  const [count, setCount] = useState(0)
+  let repeat = false;
+  let didRepeat = false;
+  let gameList = [];
   const [addGame] = useMutation(GAME_SAVED)
-
+  const { loading, data } = useQuery(QUERY_GAMES)
+  function checkRepeat(gameId) {
+    for (let i = 0; i < data.games.length; i++) {
+      console.log(gameList[i].gameId, "================", gameId)
+      if (gameList[i].gameId === gameId) {
+        repeat=true
+        didRepeat=true
+        console.log('repeated!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      } else {
+        repeat=(false)
+        console.log(' no repeated!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      }
+    }
+}
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    if (count === 0) {
+      if(!loading) {
+        setCount(count + 1)
+        console.log('count=============================', count)
+        gameList = data.games.map(a => Object.assign({}, a))
+        console.log("here", gameList, gameList[0].gameId)
+      }
+    }
+
     if (!searchInput) {
       return false;
     }
@@ -43,11 +69,16 @@ const GameSearch = () => {
             const hash = response[0].image_id;
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
-            
-            addGame({
-              variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
-            });
-
+            checkRepeat(`${gameData[i].id}`)
+            if (!repeat) {
+              if (didRepeat){
+                console.log("already added")
+              } else {
+                addGame({
+                  variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
+                });
+              }
+            }
             return link
           })
           .catch(err => {
@@ -55,6 +86,8 @@ const GameSearch = () => {
           })
       }
       setGames(gameData);
+      repeat = false
+      didRepeat=false
       setSearchInput("");
     } catch (err) {
       console.error(err);

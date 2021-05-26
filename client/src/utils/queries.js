@@ -93,3 +93,14 @@ export const QUERY_GAME = gql`
       summary
     }
   }`
+
+  export const QUERY_GAMES = gql`
+  query games{
+    games{
+      _id
+      name
+      gameId
+      coverUrl
+      summary
+    }
+  }`
