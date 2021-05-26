@@ -1,6 +1,7 @@
+  
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron, Container, Col, Form, Button, Card } from "react-bootstrap";
+import { Jumbotron, Container, Form, Button, Card, Col, CardColumns } from 'react-bootstrap';
 import { GAME_SAVED } from "../utils/mutations"
 import { useMutation } from "@apollo/client";
 
@@ -67,9 +68,9 @@ const GameSearch = () => {
 
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <Jumbotron fluid className="jumbotron jumbotron-fluid">
         <Container>
-          <h1>Search for a Game</h1>
+          <h1 class="display-4 banner" >Search for a Game</h1>
           <Form onSubmit={doFunction}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -79,53 +80,59 @@ const GameSearch = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for a Game"
+                  placeholder="Enter Title Here"
                 />
               </Col>
               <Button type="submit" variant="success" size="lg">
-                Submit Search
+                Search
               </Button>
             </Form.Row>
           </Form>
         </Container>
       </Jumbotron>
-      <Container className="col-3">
-        <h2>
+
+      <Container className="">
+        <h2 className="pageText">
           {games.length
             ? `Viewing ${games.length} results:`
-            : "No Results"}
+            : "Write a Bloc on your favorite titles by searching them up!"}
         </h2>
-        <Card style={{ width: "18rem" }}>
-          {games.map((game) => {
-            return (
-              <Link
-                to={{
-                  pathname: `/gamepage/${game.id}`,
-                  state: {
-                    name: `${game.name}`,
-                    gameId: `${game.id}`,
-                    coverUrl: `${game.coverUrl}`,
-                    summary: `${game.summary}`,
-                    first_release_date: `${game.first_release_date}`,
-                  },
-                }}
-                style={{ fontWeight: 700 }}
-                className="text-light"
-              >
-                <Card key={game.id} border="dark">
-                  {game.cover ? (
-                    <Card.Img
-                      src={game.coverUrl}
-                      alt={`The cover for ${game.name}, url: ${game.coverUrl}`}
-                      variant="top"
-                    />
-                  ) : null}
-                  <Card.Title>{game.name}</Card.Title>
+
+        <CardColumns>
+          <div>
+            {games.map((game) => {
+              return (
+                <Card style={{border: '15px solid white', width: "18rem" }}>
+                  <Link
+                    to={{
+                      pathname: `/gamepage/${game.name}`,
+                      state: {
+                        name: `${game.name}`,
+                        gameId: `${game.id}`,
+                        coverUrl: `${game.coverUrl}`,
+                        summary: `${game.summary}`,
+                        first_release_date: `${game.first_release_date}`,
+                      },
+                    }}
+                    style={{ fontWeight: 700 }}
+                    className="text-dark"
+                  >
+                    <div key={game.id}>
+                      {game.cover ? (
+                        <Card.Img
+                          src={game.coverUrl}
+                          alt={`The cover for ${game.name}, url: ${game.coverUrl}`}
+                          variant="top"
+                        />
+                      ) : null}
+                      <Card.Title>{game.name}</Card.Title>
+                    </div>
+                  </Link>
                 </Card>
-              </Link>
-            );
-          })}
-        </Card>
+              );
+            })}
+          </div>
+        </CardColumns>
       </Container>
     </>
   );

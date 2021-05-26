@@ -115,11 +115,11 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        editReview: async (parent, { _id, title, reviewBody }, context) => {
+        editReview: async (parent, { _id, title, reviewBody, rating }, context) => {
             if (context.user) {
                 const review = await Review.findByIdAndUpdate(
                     { _id: _id },
-                    { $set: { title: title, reviewBody: reviewBody } },
+                    { $set: { title: title, reviewBody: reviewBody, rating: rating } },
                     { new: true }
                 );
                 return review;

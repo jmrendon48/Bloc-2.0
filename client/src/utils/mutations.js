@@ -30,18 +30,21 @@ export const ADD_REVIEW = gql`
     $gameTitle: String!
     $gameCoverUrl: String!
     $reviewBody: String!
+    $rating: Int!
   ) {
     addReview(
       title: $title
       gameTitle: $gameTitle
       gameCoverUrl: $gameCoverUrl
       reviewBody: $reviewBody
+      rating: $rating
     ) {
       _id
       title
       gameTitle
       gameCoverUrl
       reviewBody
+      rating
       createdAt
       username
     }
@@ -62,6 +65,45 @@ export const FOLLOW_USER = gql`
   }
 `;
 
+export const EDIT_REVIEW = gql`
+  mutation editReview(
+    $_id: ID!
+    $title: String!
+    $reviewBody: String!
+    $rating: Int!
+  ) {
+    editReview(
+      _id: $_id
+      title: $title
+      reviewBody: $reviewBody
+      rating: $rating
+    ) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody
+      rating
+      createdAt
+      username
+    }
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation deleteReview($_id: ID!) {
+    deleteReview(_id: $_id) {
+      _id
+      title
+      gameTitle
+      gameCoverUrl
+      reviewBody
+      rating
+      createdAt
+      username
+    }
+  }
+`;
 export const GAME_SAVED = gql`
   mutation addGame(
     $name: String!,

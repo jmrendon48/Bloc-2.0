@@ -6,10 +6,11 @@ export const QUERY_REVIEWS = gql`
       _id
       title
       gameTitle
-      gameCoverUrl
+      gameId
       reviewBody
       createdAt
-      username
+      gameCoverUrl
+      rating
     }
   }
 `;
@@ -23,8 +24,12 @@ export const QUERY_USER = gql`
       reviews {
         _id
         title
+        gameTitle
+        gameId
         reviewBody
         createdAt
+        gameCoverUrl
+        rating
       }
       reviewCount
       follows {
@@ -45,8 +50,12 @@ export const QUERY_ME = gql`
       reviews {
         _id
         title
+        gameTitle
+        gameId
         reviewBody
         createdAt
+        gameCoverUrl
+        rating
       }
       reviewCount
       follows {
@@ -66,6 +75,7 @@ export const QUERY_REVIEWGAME = gql`
       gameTitle
       gameCoverUrl
       reviewBody
+      rating
       createdAt
       username
     }
