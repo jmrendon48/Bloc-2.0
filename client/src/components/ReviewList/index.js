@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
+import Auth from "../../utils/auth";
 
 const ReviewList = ({ reviews }) => {
   const [showEditModal, setShowEditModal] = useState(false);
