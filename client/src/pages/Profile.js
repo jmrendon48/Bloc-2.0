@@ -55,6 +55,8 @@ const Profile = () => {
     }
   };
 
+  console.log(user)
+  
   return (
     <div>
       <div class="jumbotron jumbotron-fluid">

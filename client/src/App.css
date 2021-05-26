@@ -46,6 +46,11 @@
   }
 }
 
+.pageText{
+  font-size: 250%;
+  color: var(--secondary);
+}
+
 .rightSide{
   display: flex;
   align-items: center;
