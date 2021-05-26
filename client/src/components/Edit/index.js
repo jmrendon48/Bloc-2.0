@@ -41,6 +41,7 @@ const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    reviewBody = editBody;
 
     try {
       // add thought to database
