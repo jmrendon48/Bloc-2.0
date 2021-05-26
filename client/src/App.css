@@ -3,12 +3,12 @@
   --primary: #4361ee;
   --secondary: #4CC9F0;
   --tertiary: #fff;
+  --quaternary: #00416A;
   --title: #3a0ca3;
 }
 
 .App {
   background-color: var(--background);
-  height: 500vh;
 }
 
 .App-logo {
@@ -72,7 +72,9 @@
 
 .bloc-box {
   padding: 20px;
-  border-color: var(--tertiary);
+  margin: 25px;
+  border: solid white;
+  background: #002147;
 }
 
 .small-title {

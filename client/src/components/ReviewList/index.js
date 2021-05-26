@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
+import Auth from "../../utils/auth";
 
 const ReviewList = ({ reviews }) => {
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const reload=()=>window.location.reload();
+  const reload = () => window.location.reload();
 
   if (!reviews.length) {
     return (
@@ -18,62 +19,82 @@ const ReviewList = ({ reviews }) => {
   return (
     <>
       <div className="containter center">
-        {reviews && reviews.map((review) => (
-          <div className='row bloc-box'>
-            {console.log(review._id)}
-            <div className="title row">
-              <div className='col-2'>
-                <img src="{`${review.gameCoverUrl}`}"></img>
-              </div>
-            </div>
-            <h3 className="bloc-box ml-3 col">
-              <a className='review-title'>{review.title}</a>
-            </h3>
 
-            <div >
-              <div className="col">
+        {reviews && reviews.map((review) => (
+
+          <div className='row bloc-box'>
+
+            <div className='col-3'>
+              <img src={`${review.gameCoverUrl}`}
+                fluid
+                thumbnail
+                width={200}
+              />
+              <Link to={`/gamepage/${review.gameId}`}>
+                <a className='review-title'>{review.gameTitle}</a>
+              </Link>
+
+            </div>
+
+            <div className='col'>
+
+              <h3 className='col'>
+                <a className='review-title'>{review.title}</a>
+              </h3>
+
+              <div className="pl-3">
+                <p className="username-link">
+                  Written by: <Link
+                    to={`/profile/${review.username}`}
+                    style={{ fontWeight: 700 }}
+                  >
+                    {review.username}
+                  </Link>{' '} on {review.createdAt}
+                </p>
+              </div>
+
+              <div>
                 <div className="col-9">
                   <h4 className='review-text'>{review.reviewBody}</h4>
                 </div>
               </div>
 
-              <div>
-                {[...Array(5)].map((star, i) => {
-                const ratingValue = i + 1;
+              <div className='col-9'>
+                
+                {[...Array(parseInt(`${review.rating}`))].map((star, i) => {
+                  const ratingValue = i + 1;
 
-                return (
-                  <label>
-                    <input 
-                    type='radio' 
-                    name='rating' 
-                    value={review.rating} 
-                    />
-                    <FontAwesomeIcon className='star'
-                      icon='star'
-                      size='2x'
-                      color= {review.rating ? '#ffc107' : '#e4e5e9'}
-                    />
-                  </label>
-                )
+                  return (
+                    <label>
+                      <input
+                        type='radio'
+                        name='rating'
+                        value={review.rating}
+                      />
+                      <FontAwesomeIcon className='star'
+                        icon='star'
+                        size='lg'
+                        color={review.rating ? '#ffc107' : '#e4e5e9'}
+                      />
+                    </label>
+
+                  )
                 })}
-                <h5> {review.rating}/5 Stars </h5>
               </div>
-              <div className="meta row pl-3">
-                <p className="username-link">
-                  <Link
-                    to={`/profile/${review.username}`}
-                    style={{ fontWeight: 700 }}
-                    className=""
-                  >
-                    {review.username}
-                  </Link>{' '}
-                  {review.createdAt} 
-                </p>
-              </div>
-              <button onClick={() => setShowEditModal(true)}>
-                <FontAwesomeIcon icon="plus-square" color="green" size="lg" />
-                Edit your Bloc!
+              <h5 className='small-title'> {review.rating}/5 Stars </h5>
+
+            </div>
+
+            <div>
+              <button variant='outline-light' size='sm' onClick={() => setShowEditModal(true)}>
+                <FontAwesomeIcon icon="" color="green" size="sm" /> Edit
               </button>
+            </div>
+
+
+
+            <div >
+
               <Modal
                 size="lg"
                 show={showEditModal}
@@ -86,27 +107,22 @@ const ReviewList = ({ reviews }) => {
                 <Modal.Body>
                   <Edit
                     handleModalClose={() => setShowEditModal(false)}
-                    _id = {review._id}
-                    reviewTitle = {review.title}
-                    reviewBody = {review.reviewBody}
+                    _id={review._id}
+                    reviewTitle={review.title}
+                    reviewBody={review.reviewBody}
                     setShowEditModal={setShowEditModal}
                   />
                 </Modal.Body>
               </Modal>
             </div>
-          
-              <div>
-                <div >
-                  <h4 className='review-text'>{review.reviewBody}</h4>
-                </div>
-              </div>
- 
+
           </div>
-          
+
         ))}
+
       </div>
-      
-    </>              
+
+    </>
   )
 };
 
