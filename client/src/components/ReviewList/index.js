@@ -6,7 +6,8 @@ import Edit from "../Edit/index";
 import Auth from "../../utils/auth";
 
 const ReviewList = ({ reviews, profileReviewEdit }) => {
-  const [showEditModal, setShowEditModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [passedInfo, setPassedInfo] = useState({});
 
   const reload = () => window.location.reload();
 
@@ -17,10 +18,12 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
   }
 
   const handlePassInfo = (review) => {
+    setPassedInfo(review);
     setShowEditModal(true);
     console.log(review);
    }
-
+  
+   console.log(passedInfo);
   return (
     <>
       <div className="containter center">
@@ -120,6 +123,7 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
               <Edit
                 handleModalClose={() => setShowEditModal(false)}
                 setShowEditModal={setShowEditModal}
+                passedInfo={passedInfo}
               />
             </Modal.Body>
           </Modal>
