@@ -3,8 +3,8 @@ import { useMutation } from "@apollo/react-hooks";
 import { EDIT_REVIEW, DELETE_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Edit = (props) => {
-  const { _id, reviewTitle, reviewBody, setShowEditModal } =props
+const Edit = ({ _id, reviewTitle, reviewBody, setShowEditModal }) => {
+  console.log(_id);
   const [ editReview ] = useMutation(EDIT_REVIEW);
   const [ deleteReview ] = useMutation(DELETE_REVIEW);
 
@@ -17,6 +17,8 @@ const Edit = (props) => {
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+
+  console.log()
 
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
