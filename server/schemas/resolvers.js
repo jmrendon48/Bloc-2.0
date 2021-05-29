@@ -48,7 +48,7 @@ const resolvers = {
         game: async (parent, { gameId }) => {
             return Game.findOne({ gameId })
         },
-        
+
 
     },
     Mutation: {
@@ -136,8 +136,17 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!');
         },
         addGame: async (parent, args) => {
-            const game = await Game.create(args);
-            return game;
+            const gameId = args.gameId
+            const checkId = await Game.findOne({ gameId })
+            if(!checkId) {
+                console.log('its null')
+                const game = await Game.create(args);
+                return game;
+            }
+            if (checkId.gameId === args.gameId) {
+                console.log('repeat')
+                return checkId
+            }
         },
     }
 }
