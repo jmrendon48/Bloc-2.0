@@ -7,6 +7,7 @@ import Auth from "../../utils/auth";
 
 const ReviewList = ({ reviews, profileReviewEdit }) => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [passedInfo, setPassedInfo] = useState({});
 
   const reload = () => window.location.reload();
 
@@ -16,13 +17,20 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
     )
   }
 
+  const handlePassInfo = (review) => {
+    setPassedInfo(review);
+    setShowEditModal(true);
+    console.log(review);
+   }
+  
+   console.log(passedInfo);
   return (
     <>
       <div className="containter center">
 
-        {reviews && reviews.map((review) => (
-
-          <div className='row bloc-box'>
+        {reviews && reviews.map((review, i) => (
+          
+          <div key={review._id} className='row bloc-box'>
 
             <div className='col-3'>
               <Link to={`/gamepage/${review.gameId}`}>
@@ -69,7 +77,7 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
                   const ratingValue = i + 1;
 
                   return (
-                    <label>
+                    <label key={i}>
                       <input
                         type='radio'
                         name='rating'
@@ -92,40 +100,34 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
             <div>
               {Auth.loggedIn(), profileReviewEdit &&
                 <div>
-                  <Button variant="outline-warning" size='sm' onClick={() => setShowEditModal(true)}>
+                  <Button variant="outline-warning" size='sm' onClick={() => handlePassInfo(review)}>
                     <FontAwesomeIcon icon="edit" color="#FEBE10" size="lg" />Edit</Button>{' '}
                 </div>}
-            </div>
-
-
-
-            <div >
-
-              <Modal
-                size="lg"
-                show={showEditModal}
-                onHide={() => setShowEditModal(false)}
-                onExit={reload}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Edit Review</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Edit
-                    handleModalClose={() => setShowEditModal(false)}
-                    _id={review._id}
-                    reviewTitle={review.title}
-                    reviewBody={review.reviewBody}
-                    setShowEditModal={setShowEditModal}
-                  />
-                </Modal.Body>
-              </Modal>
             </div>
 
           </div>
 
         ))}
 
+        <div >
+          <Modal
+            size="lg"
+            show={showEditModal}
+            onHide={() => setShowEditModal(false)}
+            onExit={reload}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Review</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Edit
+                handleModalClose={() => setShowEditModal(false)}
+                setShowEditModal={setShowEditModal}
+                passedInfo={passedInfo}
+              />
+            </Modal.Body>
+          </Modal>
+        </div>
       </div>
 
     </>

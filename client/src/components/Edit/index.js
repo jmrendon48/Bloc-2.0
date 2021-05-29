@@ -3,12 +3,12 @@ import { useMutation } from "@apollo/react-hooks";
 import { EDIT_REVIEW, DELETE_REVIEW } from "../../utils/mutations";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Edit = (props) => {
-  const { _id, reviewTitle, reviewBody, setShowEditModal } =props
+const Edit = ({ passedInfo, setShowEditModal }) => {
+  const { _id, title, reviewBody } = passedInfo;
   const [ editReview ] = useMutation(EDIT_REVIEW);
   const [ deleteReview ] = useMutation(DELETE_REVIEW);
 
-  const [title, setTitle] = useState("");
+  const [editTitle, setEditTitle] = useState("");
   const [titleCharacterCount, setTitleCharacterCount] = useState(0);
 
   const [editBody, setEditBody] = useState("");
@@ -18,9 +18,11 @@ const Edit = (props) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
+  console.log()
+
   const handleTitleChange = (event) => {
     if (event.target.value.length <= 30) {
-      setTitle(event.target.value);
+      setEditTitle(event.target.value);
       setTitleCharacterCount(event.target.value.length);
     }
   };
@@ -34,15 +36,13 @@ const Edit = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // reviewBody = editBody;
-
     try {
       await editReview({
-        variables: { _id:_id, title:title, reviewBody:editBody, rating:rating },
+        variables: { _id:_id, title: editTitle, reviewBody:editBody, rating:rating },
       });
 
       // clear form value
-      setTitle("");
+      setEditTitle("");
       setTitleCharacterCount(0);
       setEditBody("");
       SetEditBodyCharacterCount(0);
@@ -100,8 +100,8 @@ const Edit = (props) => {
         onSubmit={handleFormSubmit}
       >
         <textarea
-          placeholder={reviewTitle}
-          value={title}
+          placeholder={title}
+          value={editTitle}
           className="form-input col-12 col-md-9"
           onChange={handleTitleChange}
         ></textarea>
