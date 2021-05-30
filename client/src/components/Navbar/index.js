@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from '../SignUp/index';
 import LoginForm from '../Login/index';
-import GameSearch from '../../pages/GameSearch'
 
 import Auth from '../../utils/auth';
 

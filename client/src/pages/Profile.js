@@ -10,7 +10,7 @@ import { FOLLOW_USER } from '../utils/mutations';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
 const Profile = () => {
-  const [profileReviewEdit, setProfileReviewEdit] = useState(true);
+  const [profileReviewEdit] = useState(true);
   const [followUser] = useMutation(FOLLOW_USER);
 
   const { username: userParam } = useParams();
