@@ -41,15 +41,21 @@ const GameSearch = () => {
             const hash = response[0].image_id;
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
-            addGame({
-              variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
-            });
+            if (gameData[i].summary === undefined || typeof gameData[i].summary === 'string') {
+              //skip
+              console.log('SKIP!!!!!!!!!!!!!!!!!!!!!!')
+            } else {
+              addGame({
+                variables: { name: gameData[i].name, gameId: `${gameData[i].id}`, coverUrl: gameData[i].coverUrl, summary: gameData[i].summary }
+              });
+            }
             return link
           })
           .catch(err => {
             console.error(err);
           })
       }
+
       setGames(gameData);
       setSearchInput("");
     } catch (err) {
