@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useParams } from 'react-router-dom';
 import { QUERY_REVIEWGAME } from "../utils/queries";
 import GameInfo from "../components/GameInfo/index"
-import { Container, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import ReviewList from "../components/ReviewList/index";
 
 
