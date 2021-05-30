@@ -38,6 +38,7 @@ const ReviewList = ({ reviews, profileReviewEdit, data }) => {
               <Link to={`/gamepage/${review.gameId}`}>
                 <img src={`${review.gameCoverUrl}`}
                   fluid
+                  alt=""
                   thumbnail
                   width={200}
                 />
@@ -76,7 +77,6 @@ const ReviewList = ({ reviews, profileReviewEdit, data }) => {
               <div className='col-9'>
 
                 {[...Array(parseInt(`${review.rating}`))].map((star, i) => {
-                  const ratingValue = i + 1;
 
                   return (
                     <label key={i}>
