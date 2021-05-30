@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Edit from "../Edit/index";
 import Auth from "../../utils/auth";
 
-const ReviewList = ({ reviews, profileReviewEdit }) => {
+const ReviewList = ({ reviews, profileReviewEdit, data }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [passedInfo, setPassedInfo] = useState({});
-
+  let sameUser = true;
   const reload = () => window.location.reload();
+  if (!data?.me) {
+    sameUser = false;
+  }
+  console.log(sameUser);
 
   if (!reviews.length) {
     return (
@@ -20,10 +24,8 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
   const handlePassInfo = (review) => {
     setPassedInfo(review);
     setShowEditModal(true);
-    console.log(review);
    }
-  
-   console.log(passedInfo);
+
   return (
     <>
       <div className="containter center">
@@ -98,7 +100,7 @@ const ReviewList = ({ reviews, profileReviewEdit }) => {
             </div>
 
             <div>
-              {Auth.loggedIn(), profileReviewEdit &&
+              {sameUser &&
                 <div>
                   <Button variant="outline-warning" size='sm' onClick={() => handlePassInfo(review)}>
                     <FontAwesomeIcon icon="edit" color="#FEBE10" size="lg" />Edit</Button>{' '}
