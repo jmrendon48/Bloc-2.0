@@ -20,10 +20,10 @@ const Profile = () => {
   });
 
   const user = data?.user || data?.me || {};
+
   // redirect to personal profile page if username is the logged-in user's
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/profile/" />;
-
   }
 
   if (loading) {
@@ -79,7 +79,7 @@ const Profile = () => {
         <div className='col-9'>
           <div className="flex-row justify-space-between mb-3">
             <div>
-              <ReviewList reviews={user.reviews} profileReviewEdit={profileReviewEdit} />
+              <ReviewList reviews={user.reviews} data={data} profileReviewEdit={profileReviewEdit} />
             </div>
           </div>
         </div>

@@ -11,6 +11,10 @@
   background-color: var(--background);
 }
 
+html {
+  background-color: var(--background);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

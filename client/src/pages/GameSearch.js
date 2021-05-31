@@ -41,7 +41,7 @@ const GameSearch = () => {
             const hash = response[0].image_id;
             const link = `https://images.igdb.com/igdb/image/upload/t_1080p/${hash}.jpg`
             gameData[i].coverUrl = `${link}`
-            if (gameData[i].summary === undefined || typeof gameData[i].summary === 'string') {
+            if (gameData[i].summary === undefined || typeof gameData[i].summary != 'string') {
               //skip
               console.log('SKIP!!!!!!!!!!!!!!!!!!!!!!')
             } else {
