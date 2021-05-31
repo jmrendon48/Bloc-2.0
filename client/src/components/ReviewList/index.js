@@ -28,7 +28,7 @@ const ReviewList = ({ reviews, profileReviewEdit, data }) => {
 
   return (
     <>
-      <div className="containter center">
+      <div className="container center">
 
         {reviews && reviews.map((review, i) => (
           
